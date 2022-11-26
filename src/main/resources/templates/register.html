@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="container login">
+            <div id="register">
+                <form action="/register" id="registerForm" method="POST">
+                    <span id="errorMessage"></span>
+                    <label for="regName">Nev:</label>
+                    <input type="text" name="name" id="regName" />
+                    <label for="regEmail">E-mail:</label>
+                    <input type="text" name="email" id="regEmail" />
+                    <label for="regPassword">Jelszo:</label>
+                    <input type="password" name="password" id="regPassword" /><br />
+                    <label for="regPassword2">Jelszo ujra:</label>
+                    <input type="password" name="password2" id="regPassword2" /><br />
+                    <small>A jelszo minimum 6 karakter kell legyen</small><br />
+                    <label for="address">Lakcim:</label>
+                    <textarea
+                            type="text"
+                            name="address"
+                            id="address"
+                            rows="2"
+                            cols="30"
+                    ></textarea>
+                    <button id="regButton" type="submit">Regisztralok</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../static/javascript/register.js"></script>
+    <script src="../static/javascript/nav.js"></script>
+</body>
+</html>

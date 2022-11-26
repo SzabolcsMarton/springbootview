@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <main>
+            <div id="burik">
+                <form class="leiras">
+                    <div id="burgerDarabSelect">
+                        <span class="burgerName">Sajt-burger</span>
+                        <select name="Sajtburger" class="burgerek">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <br />
+                        <span class="burgerName">Rofi-burger</span>
+                        <select name="Rofiburger" class="burgerek">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <br />
+                        <span class="burgerName">Vegan-burger</span>
+                        <select name="Veganburger" class="burgerek">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <br />
+                        <span class="burgerName">Dupla-burger</span>
+                        <select name="Duplaburger" class="burgerek">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div id="szallitas">
+                        <p>Kiszallitas (500 Ft)</p>
+                        <input
+                                type="checkbox"
+                                id="szallitIgen"
+                                name="szallit"
+                                value="true"
+                        />
+                        <label for="szallitas">Igen</label><br />
+                    </div>
+                    <span>Rendeles osszesito:</span><br />
+                    <div id="rendelosszesito"></div>
+                    <br />
+                    <button id="order-button">Rendeles</button>
+                    <span>Vegosszeg: <span id="vegosszeg"></span><small>Ft</small> </span>
+                </form>
+            </div>
+        </main>
+
+    </div>
+    <script src="../static/javascript/order.js"></script>
+    <script src="../static/javascript/nav.js"></script>
+</body>
+</html>

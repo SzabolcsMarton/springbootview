@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../static/css/main.css"/>
+    <title>Home</title>
+</head>
+<body>
+<header>
+    <nav class="nav-bar">
+        <a href="http://localhost:8080"><img src="../../static/img/logo.png" alt="logo" th:src="@{/img/logo.png}"/></a>
+
+        <a href="#" class="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </a>
+
+        <div class="navbar-links">
+            <ul>
+                <li>
+                    <a href="http://localhost:8080/">Home</a>
+                </li>
+                <li>
+                    <a href="http://localhost:8080/about">About</a>
+                </li>
+                <li>
+                    <a href="http://localhost:8080/products">Menu</a>
+                </li>
+                <li>
+                    <a href="http://localhost:8080/order">Order</a>
+                </li>
+                <li>
+                    <a href="http://localhost:8080/login">Login</a>
+                </li>
+                <li>
+                    <a href="http://localhost:8080/admin">Admin</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div layout:fragment="content">
+</div>
+
+<script src="../../static/javascript/nav.js"></script>
+</body>
+</html>
+
+

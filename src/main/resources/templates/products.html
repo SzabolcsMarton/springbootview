@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}"
+
+>
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <main>
+        <ul class="products" th:each="burger: ${allhamburger}">
+
+            <li class="menuItem">
+                <div class="menuDescription">
+                    <input type="hidden" name="idForEdit"/>
+                    <a href="/admin/hamburgers/<%= hamburger.id %>">Edit</a>
+                    <input type="hidden" name="idForDelete"/>
+                    <a href="/admin/hamburgers/<%= hamburger.id %>">Delete</a>
+                    <h2 th:text="${burger.name}"></h2>
+                    <div th:each="currentTopping: ${burger.toppings}">
+                        <p th:text="${currentTopping.name}"></p>
+                    </div>
+                    <span th:text="${burger.price}"><span> - Ft.</span></span>
+                </div>
+            </li>
+
+        </ul>
+    </main>
+
+    <!-- <tr th:each="student: ${students}">
+         <td th:text="${student.id}" />
+         <td th:text="${student.name}" />
+     </tr>-->
+
+</div>
+<script src="../static/javascript/nav.js"></script>
+</body>
+</html>
