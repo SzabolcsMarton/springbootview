@@ -1,64 +1,69 @@
 <!DOCTYPE html>
 <html lang="en"
+      xmlns:th="http://www.thymleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 <head>
     <title>Makiburger</title>
 </head>
 <body>
+<div layout:fragment="content">
+    <div class="leiras adminPanel">
+        <form
+                th:action="@{/admin/hamburger/addnewburger}"
+                method="GET"
+                id="newHamburgerCreaterForm"
+                accept-charset="utf-8">
+            <H1 id="adminHeader">Hamburger ADMIN felület </H1>
+            <div class="products, menuItem, menuDescription" th:if="${message != null}">
+                <span th:text="${message}"></span>
+            </div>
+            <span id="errorMessage"></span>
+            <label for="newHamburgerName">Hamburger neve:</label>
+            <input
+                    type="text"
+                    name="name"
+                    id="newHamburgerName"
+                    required
+                    />
+            <label for="newHamburgerPrice">Hamburger ar:</label>
+            <input
+                    type="text"
+                    name="price"
+                    id="newHamburgerPrice"
+                    required
+                    />
 
-    <div layout:fragment="content">
+            <div id="checkboxContainer">
+                <div class="toppingCheckbox" th:each="topping: ${toppings}">
+                    <input  class="toppingInput" type="checkbox" th:name="${topping.name}" >
+                    <span class="topCheckboxLabel" th:text="${topping.name}">Topping</span>
+                </div>
+            </div>
 
-        <div class="leiras">
-            <form
-                    action="/admin/hamburger"
-                    method="POST"
-                    id="newHamburgerCreaterForm"
-            >
-                <span id="errorMessage"></span>
-                <label for="newHamburgerName">Hamburger neve:</label>
-                <input
-                        type="text"
-                        name="newHamburgerName"
-                        id="newHamburgerName"
-                        required
-                />
-                <label for="newHamburgerPrice">Hamburger ar:</label>
-                <input
-                        type="text"
-                        name="newHamburgerPrice"
-                        id="newHamburgerPrice"
-                        required
-                />
-                <label for="newHamburgerToppings">Feltetek:</label>
-                <textarea
-                        type="text"
-                        name="newHamburgerToppings"
-                        id="newHamburgerToppings"
-                        rows="2"
-                        cols="30"
-                        required
-                ></textarea>
-                <button id="createNewHamburgerBtn" type="submit">Elkuld</button>
-            </form>
-            <form action="/admin/hamburger/" id="adminBurgerSearch">
-                <input type="hidden" name="name" value="asd" />
-
-                <label for="hamburgerToFind">Hamburger Neve:</label>
-                <input
-                        type="text"
-                        name="hamburgerToFind"
-                        id="hamburgerToFind"
-                        required
-                />
-                <button type="submit" name="btnSearch" id="hambSearchBtn" value="">
-                    Keres
-                </button>
-            </form>
-        </div>
-
+            <button id="createNewHamburgerBtn" type="submit">Elkuld</button>
+        </form>
+        <hr/>
+        <form th:action="@{admin/hamburger/toppings/addtopping}">
+            <label for="addTopping">Új feltét</label>
+            <input id="addTopping" type="text" name="newTopping" required>
+            <button type="submit">Mentés</button>
+        </form>
+        <hr/>
+        <form th:action="@{/admin/hamburger/allburger}"
+              method="GET">
+            <button type="submit" class="button">Összes Hamburger</button>
+        </form>
+        <form th:action="@{/admin/hamburger/burgerbyname}" id="adminBurgerSearch">
+            <label for="hamburgerToFind">Hamburger Neve:</label>
+            <input
+                    type="text"
+                    name="hamburgerToFindByName"
+                    id="hamburgerToFind"
+                    required/>
+            <button type="submit" id="hambSearchBtn">Keres</button>
+        </form>
     </div>
-    <script src="../static/javascript/nav.js"></script>
-
+</div>
 </body>
 </html>

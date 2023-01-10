@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <main>
+        <div class="leiras  orderContainer">
+            <h1>Rendelés összesítő</h1>
+            <div class="orderItems" >
+                <div th:each="item: ${cart.orderItems}">
+                    <div th:if="${item.quantity > 0}">
+                        <span th:text="${item.hamburgerName}"></span><span>: </span><span
+                            th:text="${item.quantity}"></span><span> db összesen: </span><span th:text="${item.sumOfPrice}"></span><span> Ft.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="delivery" th:if="${cart.delivery}">
+                <span>Kiszállitás: 500</span><span> Ft.</span>
+                <p class="deliveryAddressItem" th:text="${#dates.format(cart.timeOfOrder, 'yyyy-MM-dd HH:mm')}" ></p>
+            </div>
+
+            <div class="delivery ">
+                <h3>Szállitási cím</h3>
+                <p class="deliveryAddressItem">Név: <span th:text="${address.name}"></span></p>
+                <p class="deliveryAddressItem">Város: <span th:text="${address.zip}"></span> <span th:text="${address.city}"></span></p>
+                <p class="deliveryAddressItem">Utca: <span th:text="${address.street}"></span> <span th:text="${address.houseNumber}"></span></p>
+                <p class="deliveryAddressItem" >Tel. :<span th:text="${address.phone}"></span></p>
+            </div>
+
+            <div  class="delivery">
+                <span>Végösszeg:</span><span th:text="${cart.sumOfAllItemPrices}"></span><span> Ft.</span>
+                <form method="GET" th:action="@{/}">
+                    <button type="submit">Kezdő oldal</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

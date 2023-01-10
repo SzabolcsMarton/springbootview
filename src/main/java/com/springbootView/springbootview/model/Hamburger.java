@@ -4,14 +4,15 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Hamburger {
+public class Hamburger implements  Comparable<Hamburger>{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "seqGenHamburger", sequenceName = "hamburgerIdSeq", initialValue = 10001, allocationSize = 1)
+    @GeneratedValue(generator = "seqGenHamburger")
     private long id;
     private String name;
     private int price;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany( fetch = FetchType.EAGER)
     @JoinTable(name = "hamburgers_toppings", joinColumns = {@JoinColumn(name = "hamburger_id")}, inverseJoinColumns = {
             @JoinColumn(name = "topping_id")})
     private List<Topping> toppings;
@@ -62,5 +63,35 @@ public class Hamburger {
 
     public void setToppings(List<Topping> toppings) {
         this.toppings = toppings;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Hamburger hamburger = (Hamburger) o;
+
+        return name.equals(hamburger.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Hamburger{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", toppings=" + toppings +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Hamburger o) {
+        return this.getName().compareTo(o.getName());
     }
 }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="leiras ">
+        <h1 class="editHeader">Hamburger szerkesztő felület </h1>
+        <h4 class="editHeader">Amelyik mezőt nem kívánja változtatni azt hagyja üresen!</h4>
+        <div class="editpanel">
+            <div class="editBurgerInput">
+                <div class="newburgercard">
+                    <h3>Eredeti hamburger</h3>
+                    <div class="menuDescription">
+                        <h2 th:text="${burgerById.name}"></h2>
+                        <span class="burgertoppings" th:each="currentTopping: ${burgerById.toppings}"
+                              th:text="${currentTopping.name}"></span>
+                        </br>
+                        <span th:text="${burgerById.price}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="editBurgerInput">
+                <form
+                        th:action="@{/admin/hamburger/edit/editburger}"
+                        method="GET"
+                        id="newHamburgerCreaterForm">
+                    <h3>Új hamburger</h3>
+                    <input type="hidden" name="editId" th:value="${burgerById.id}"/>
+                    <label for="newHamburgerName">Hamburger neve:</label>
+                    <input
+                            type="text"
+                            name="name"
+                            id="newHamburgerName"
+                            value=""
+
+                    />
+                    <label for="newHamburgerPrice">Hamburger ár:</label>
+                    <input
+                            type="text"
+                            name="price"
+                            id="newHamburgerPrice"
+                            value=""
+                    />
+                    <div id="checkboxContainer">
+                        <div class="toppingCheckbox" th:each="topping: ${toppings}">
+
+                            <input class="toppingInput" type="checkbox" th:name="${topping.name}">
+                            <span class="topCheckboxLabel" th:text="${topping.name}">Topping</span>
+                        </div>
+                    </div>
+                    <button id="createNewHamburgerBtn" type="submit">Elkűld</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,54 +1,84 @@
 package com.springbootView.springbootview.controller;
 
+import com.springbootView.springbootview.model.Cart;
 import com.springbootView.springbootview.services.HamburgerService;
+import com.springbootView.springbootview.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+
+
 @Controller
+@RequestMapping(value = "/")
 public class HamburgerController {
 
-    private HamburgerService hamburgerService;
+    private final HamburgerService hamburgerService;
+    private final OrderService orderService;
 
     @Autowired
-    public HamburgerController(HamburgerService hamburgerService) {
+    public HamburgerController(HamburgerService hamburgerService, OrderService orderService) {
         this.hamburgerService = hamburgerService;
+        this.orderService = orderService;
     }
 
-    @RequestMapping ("/")
-    public String getHomeView(){
+    @GetMapping("/")
+    public String getHomeView() {
         return "index";
     }
 
-    @RequestMapping ("/about")
-    public String getAboutView(){
+    @GetMapping("/about")
+    public String getAboutView() {
         return "about";
     }
 
-    @RequestMapping ("/products")
-    public String getProductsView(Model model){
+    @GetMapping("/products")
+    public String getProductsView(Model model) {
         model.addAttribute("allhamburger", hamburgerService.getAllBurger());
         return "products";
     }
 
-    @RequestMapping ("/order")
-    public String getOrdersView(){
+    @GetMapping("/order")
+    public String getOrdersView(Model model) {
+        model.addAttribute("allhamburger", hamburgerService.getAllBurger());
         return "order";
     }
 
-    @RequestMapping ("/admin")
-    public String getAdminView(){
-        return "admin";
+    @GetMapping(value = "/order/hamburger")
+    public String getOrder(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
+        String params = request.getQueryString();
+        Cart cart = orderService.parseOrders(params);
+        model.addAttribute("cart", cart);
+        model.addAttribute("address", cart.getAddress());
+        return "ordered_products";
     }
 
-    @RequestMapping ("/login")
-    public String getLoginView(){
+    @GetMapping("/login")
+    public String getLoginView() {
+        return "login";
+    }
+/*
+    @PostMapping ("/login")
+    public String getLoginViewDetails(@RequestBody String email, @RequestBody String password){
+        System.out.println(email);
         return "login";
     }
 
-    @RequestMapping ("/register")
+    @GetMapping ("/register")
     public String getRegisterView(){
         return "register";
     }
+
+    @PostMapping("/register")
+    public void getRegisterPostView(@RequestBody String user){
+        System.out.println(user);
+       // return "register";
+    }
+    */
+
+
 }

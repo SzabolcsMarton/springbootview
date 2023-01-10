@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="leiras">
+        <div class="menuItem"  th:if="${newburger == null}">
+            <span>Hamburger mentése sikertelen</span>
+        </div>
+        <div class="newburgercard" th:if="${newburger != null}">
+            <span > Hamburger sikeresen elmentve</span>
+            <div class="menuDescription">
+                <h2 th:text="${newburger.name}"></h2>
+                <span class="burgertoppings" th:each="currentTopping: ${newburger.toppings}"
+                      th:text="${currentTopping.name}"></span>
+                <span th:text="${newburger.price}"></span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

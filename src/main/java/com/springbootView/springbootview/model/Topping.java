@@ -1,15 +1,13 @@
 package com.springbootView.springbootview.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Topping {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "seqGenTopping", sequenceName = "toppingIdSeq", initialValue = 20001, allocationSize = 1)
+    @GeneratedValue(generator = "seqGenTopping")
     private long id;
     private String name;
 
@@ -40,4 +38,6 @@ public class Topping {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

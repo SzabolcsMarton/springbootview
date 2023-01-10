@@ -9,14 +9,15 @@
 <body>
 <div layout:fragment="content">
     <main>
-        <ul class="products" th:each="burger: ${allhamburger}">
+
+        <ul class="products" th:each="burger: ${allburgers}">
             <li class="menuItem">
                 <div class="menuDescription">
-                    <h2 th:text="${burger.name}"></h2>
-                    <span class="burgertoppings" th:each="currentTopping: ${burger.toppings}"
-                          th:text="${currentTopping.name}"></span>
-                    <span th:text="${burger.price}"></span>
-
+                    <form th:action="@{/admin/hamburger/burgerbyid}">
+                        <h2 th:text="${burger.name}"></h2>
+                        <input type="hidden" name="hamburgerToFindById" th:value="${burger.id}"/>
+                        <button type="submit" class="button">Megnyit</button>
+                    </form>
                 </div>
             </li>
         </ul>

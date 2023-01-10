@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
+      xmlns:th="http://www.thymleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 <head>
@@ -7,93 +8,67 @@
 </head>
 <body>
 
-    <div layout:fragment="content">
+<div layout:fragment="content">
 
-        <main>
-            <div id="burik">
-                <form class="leiras">
-                    <div id="burgerDarabSelect">
-                        <span class="burgerName">Sajt-burger</span>
-                        <select name="Sajtburger" class="burgerek">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                        <br />
-                        <span class="burgerName">Rofi-burger</span>
-                        <select name="Rofiburger" class="burgerek">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                        <br />
-                        <span class="burgerName">Vegan-burger</span>
-                        <select name="Veganburger" class="burgerek">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                        <br />
-                        <span class="burgerName">Dupla-burger</span>
-                        <select name="Duplaburger" class="burgerek">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
+    <main>
+        <div id="burik">
+            <form class="leiras" method="GET" th:action="@{/order/hamburger}">
+                <h1>Hamburger rendelés</h1>
+                <hr/>
+                <div id="orderAddressField">
+                    <div>
+                        <label for="orderName">Név:</label>
+                        <input type="text" name="name" id="orderName" required/>
                     </div>
-                    <div id="szallitas">
-                        <p>Kiszallitas (500 Ft)</p>
-                        <input
-                                type="checkbox"
-                                id="szallitIgen"
-                                name="szallit"
-                                value="true"
-                        />
-                        <label for="szallitas">Igen</label><br />
+                    <div>
+                        <label for="orderCity">Város:</label>
+                        <input type="text" name="city" id="orderCity" required/>
                     </div>
-                    <span>Rendeles osszesito:</span><br />
-                    <div id="rendelosszesito"></div>
-                    <br />
-                    <button id="order-button">Rendeles</button>
-                    <span>Vegosszeg: <span id="vegosszeg"></span><small>Ft</small> </span>
-                </form>
-            </div>
-        </main>
+                    <div>
+                        <label for="orderStreet">Út/utca:</label>
+                        <input type="text" name="street" id="orderStreet" required/>
+                    </div>
+                    <div>
+                        <label for="orderHouseNumber">Ház sz.:</label>
+                        <input type="text" name="number" id="orderHouseNumber" required/>
+                    </div>
+                    <div>
+                        <label for="orderZip">Ir. szám:</label>
+                        <input type="text" name="zip" id="orderZip" required/>
+                    </div>
+                    <div>
+                        <label for="orderPhone">Tel.:</label>
+                        <input type="text" name="phone" id="orderPhone" required/>
+                    </div>
+                </div>
+                <hr/>
+                <div id="burgerDarabSelect">
+                    <div th:each="burger: ${allhamburger}">
+                        <label th:for="${burger.name}" th:text="${burger.name}">Burger</label>
+                        <input type="range" th:name="${burger.name}" min="0" max="15" value="0"
+                               oninput="this.nextElementSibling.value = this.value">
+                        <output>0</output>
+                        <br/>
+                    </div>
+                </div>
+                <div id="szallitas">
+                    <p>Kiszallitas (500 Ft)</p>
+                    <input
+                            type="checkbox"
+                            id="szallitIgen"
+                            name="szallit"
+                            value="true"
+                    />
+                    <label id="szallitIgenLabel" for="szallitIgen">Igen</label><br/>
+                </div>
+                <hr/>
 
-    </div>
-    <script src="../static/javascript/order.js"></script>
-    <script src="../static/javascript/nav.js"></script>
+                <button id="cart-button" type="submit">Rendeles</button>
+            </form>
+        </div>
+    </main>
+
+</div>
+
 </body>
 </html>
