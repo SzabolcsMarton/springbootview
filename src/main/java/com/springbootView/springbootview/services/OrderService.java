@@ -20,6 +20,8 @@ import java.util.Arrays;
 @Service
 public class OrderService {
 
+    private static final int FIRST_ORDER_PARAM_INDEX_INDEX = 6;
+
     private final HamburgerRepository hamburgerRepository;
     private final AddressRepository addressRepository;
     private final CartRepository cartRepository;
@@ -37,8 +39,8 @@ public class OrderService {
     public Cart parseOrders(String ordersString) throws UnsupportedEncodingException {
         String encodedParams = URLDecoder.decode(ordersString, StandardCharsets.UTF_8.toString());
         String[] params = encodedParams.split("&");
-        String[] deliveryParams = Arrays.copyOfRange(params, 0, 6);
-        String[] orderParams = Arrays.copyOfRange(params, 6, params.length );
+        String[] deliveryParams = Arrays.copyOfRange(params, 0, FIRST_ORDER_PARAM_INDEX_INDEX);
+        String[] orderParams = Arrays.copyOfRange(params, FIRST_ORDER_PARAM_INDEX_INDEX, params.length );
 
         Address address = addressRepository.save(parseAddress(deliveryParams));
         Cart newCart = new Cart();
