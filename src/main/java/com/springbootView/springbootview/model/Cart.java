@@ -2,7 +2,6 @@ package com.springbootView.springbootview.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -101,25 +100,18 @@ public class Cart {
         this.timeOfOrder = timeOfOrder;
     }
 
-    /*  @Override
-      public String toString() {
-          return "Order{" +
-                  "id=" + cartId +
-                  ", orderItems=" + orderItems +
-                  ", delivery=" + delivery +
-                  ", sumOfAllItemPrices=" + sumOfAllItemPrices +
-                  ", address=" + address +
-                  ", timeOfOrder=" + timeOfOrder +
-                  '}';
-      }*/
-    @OneToMany(mappedBy = "cart")
-    private Collection<OrderItem> orderItem;
-
-    public Collection<OrderItem> getOrderItem() {
-        return orderItem;
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + cartId +
+                ", orderItems=" + orderItems +
+                ", delivery=" + delivery +
+                ", sumOfAllItemPrices=" + sumOfAllItemPrices +
+                ", address=" + address +
+                ", timeOfOrder=" + timeOfOrder +
+                '}';
     }
 
-    public void setOrderItem(Collection<OrderItem> orderItem) {
-        this.orderItem = orderItem;
-    }
+
+
 }

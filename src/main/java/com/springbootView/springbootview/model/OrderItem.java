@@ -4,8 +4,6 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
-
-
 @Entity
 @Table(name = "orderitem")
 public class OrderItem {
