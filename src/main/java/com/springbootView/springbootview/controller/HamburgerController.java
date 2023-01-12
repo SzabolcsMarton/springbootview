@@ -51,7 +51,7 @@ public class HamburgerController {
     @GetMapping(value = "/order/hamburger")
     public String getOrder(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
         String params = request.getQueryString();
-        Cart cart = orderService.parseOrders(params);
+        Cart cart = orderService.saveOrder(params);
         model.addAttribute("cart", cart);
         model.addAttribute("address", cart.getAddress());
         return "ordered_products";

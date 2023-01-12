@@ -36,12 +36,15 @@ public class OrderService {
         this.orderItemRepository = orderItemRepository;
     }
 
-    public Cart parseOrders(String ordersString) throws UnsupportedEncodingException {
+    public Cart saveOrder(String ordersString) throws UnsupportedEncodingException {
+        return cartRepository.save(parseOrders(ordersString));
+    }
+
+    private Cart parseOrders(String ordersString) throws UnsupportedEncodingException {
         String encodedParams = URLDecoder.decode(ordersString, StandardCharsets.UTF_8.toString());
         String[] params = encodedParams.split("&");
         String[] deliveryParams = Arrays.copyOfRange(params, 0, FIRST_ORDER_PARAM_INDEX_INDEX);
-        String[] orderParams = Arrays.copyOfRange(params, FIRST_ORDER_PARAM_INDEX_INDEX, params.length );
-
+        String[] orderParams = Arrays.copyOfRange(params, FIRST_ORDER_PARAM_INDEX_INDEX, params.length);
         Address address = addressRepository.save(parseAddress(deliveryParams));
         Cart newCart = new Cart();
         newCart.setAddress(address);
@@ -51,22 +54,21 @@ public class OrderService {
             if (orderItems[0].equals("szallit")) {
                 savedCart.setDelivery(true);
             } else {
-                Hamburger hamburger = getHamburgerByName(orderItems[0]);
-                OrderItem itemToSave =new OrderItem(hamburger.getName(), Integer.parseInt(orderItems[1]), hamburger.getPrice(),savedCart);
-                OrderItem item = orderItemRepository.save(itemToSave);
+                OrderItem item = parseOrderItem(orderItems,savedCart);
                 savedCart.addItem(item);
-
             }
         }
-
-        return cartRepository.save(savedCart);
+        return savedCart;
     }
 
-
+    private OrderItem parseOrderItem(String[] itemParam,Cart savedCart){
+        Hamburger hamburger = getHamburgerByName(itemParam[0]);
+        OrderItem itemToSave = new OrderItem(hamburger.getName(), Integer.parseInt(itemParam[1]), hamburger.getPrice(), savedCart);
+        return orderItemRepository.save(itemToSave);
+    }
 
     private Hamburger getHamburgerByName(String name) {
         return hamburgerRepository.findByName(name).orElseThrow(() -> new HamburgerNotFoundException("Cannot find Hamburger with name: " + name));
-
     }
 
     private Address parseAddress(String[] deliveryParams) {
