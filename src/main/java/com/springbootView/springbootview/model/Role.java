@@ -1,7 +1,16 @@
 package com.springbootView.springbootview.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+
+@Entity
 public class Role {
 
+    @Id
+    @SequenceGenerator(name = "seqGenRole", sequenceName = "roleIdSeq", initialValue = 60001, allocationSize = 1)
+    @GeneratedValue(generator = "seqGenRole")
     private Long roleId;
     private String role;
 
