@@ -32,7 +32,7 @@ public class OrderController {
         return "order";
     }
 
-    @GetMapping(value = "order/hamburger")
+    @GetMapping(value = "/hamburger")
     public String getOrder(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
         String params = request.getQueryString();
         Cart cart = orderService.saveOrder(params);
