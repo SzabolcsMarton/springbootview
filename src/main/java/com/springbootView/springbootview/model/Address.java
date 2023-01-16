@@ -16,6 +16,8 @@ public class Address {
     private String houseNumber;
     private String zip;
     private String phone;
+    @OneToOne(mappedBy = "address")
+    private User user;
 
     public Address() {
     }
