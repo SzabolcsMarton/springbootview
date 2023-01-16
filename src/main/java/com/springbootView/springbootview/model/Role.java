@@ -1,9 +1,8 @@
 package com.springbootView.springbootview.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Role {
@@ -11,8 +10,11 @@ public class Role {
     @Id
     @SequenceGenerator(name = "seqGenRole", sequenceName = "roleIdSeq", initialValue = 60001, allocationSize = 1)
     @GeneratedValue(generator = "seqGenRole")
+    @Column(name = "role_id")
     private Long roleId;
     private String role;
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
 
     public Role() {
     }
