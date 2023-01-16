@@ -379,7 +379,7 @@ select {
 }
 
 /* register */
-#register {
+#register, #log {
     font-family: "Poppins", sans-serif;
     margin: 160px auto;
     border: 3px solid rgb(29, 5, 117);
@@ -395,7 +395,8 @@ select {
     overflow-y: hidden;
 }
 
-#register label {
+#register label,
+#log label {
     display: block;
 }
 
@@ -403,7 +404,8 @@ select {
     display: block;
 }
 
-#register input {
+#register input,
+#log label {
     margin: 1px 0;
     border-radius: 8px;
 }
@@ -563,16 +565,16 @@ select {
     margin: 0.5rem 2rem;
 }
 
-#orderAddressField{
+#orderAddressField {
     display: flex;
     flex-direction: column;
 }
 
-.deliveryAddressItem{
+.deliveryAddressItem {
     margin-top: 0.2rem;
     margin-bottom: 0.2rem;
 }
 
-#cart-button{
+#cart-button {
     margin-bottom: 1rem;
 }
