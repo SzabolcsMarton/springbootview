@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="hu" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -38,11 +39,14 @@
                     <a href="http://localhost:8080/order">Order</a>
                 </li>
                 <li>
-                    <a href="http://localhost:8080/login">Login</a>
-                </li>
-                <li>
                     <a href="http://localhost:8080/admin">Admin</a>
                 </li>
+                <div>
+                    Üdvözlünk <span sec:authentication="name">Vendég</span>
+                    <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" >
+                        <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Kijelentkezés</a>
+                    </form>
+                </div>
             </ul>
         </div>
     </nav>
