@@ -14,9 +14,10 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
     private String name;
-    @Column(unique = true, nullable = false)
     @Email(regexp = "^[\\\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$")
+    @Column(unique = true, nullable = false)
     private String email;
+    private String password;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {
             @JoinColumn(name = "role_id")})
@@ -28,12 +29,21 @@ public class User {
     public User() {
     }
 
-    public User(String name, String email, Set<Role> roles, Address address, Date registered) {
+    public User(String name, String email, String password, Set<Role> roles, Address address, Date registered) {
         this.name = name;
         this.email = email;
+        this.password = password;
         this.roles = roles;
         this.address = address;
         this.registered = registered;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getUserId() {
@@ -82,5 +92,13 @@ public class User {
 
     public void setRegistered(Date registered) {
         this.registered = registered;
+    }
+
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+
+    public void removeRole(Role role) {
+        this.roles.remove(role);
     }
 }
