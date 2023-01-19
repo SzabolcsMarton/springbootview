@@ -99,6 +99,20 @@ img {
     color: black;
 }
 
+#navBarUser{
+    display: flex;
+    flex-direction: column;
+}
+
+#welcomeText{
+    display: flex;
+    justify-content: center;
+}
+
+#frmlogout a{
+    font-size: 0.9rem;
+}
+
 .toggle-button {
     position: absolute;
     top: 1.2rem;
@@ -370,12 +384,37 @@ select {
 #toRegButton,
 #logInButton {
     border: 2px solid black;
-    border-radius: 8px;
+    border-radius: 7px;
+    font-size: 1rem;
+    margin: 0.2rem;
 }
 
 #toRegButton a {
     text-decoration: none;
     color: black;
+}
+
+#loginForm{
+    display: flex;
+    flex-direction: column;
+}
+
+.loginInput{
+    font-size: 1.1rem;
+    border-radius: 7px;
+}
+
+#firstLoginPanelItem{
+    display: flex;
+    margin: 5px 0;
+    flex-direction: column;
+    align-items: center;
+}
+
+#secondLoginPanelItem{
+    display: flex;
+    margin: 5px 0;
+    justify-content: center;
 }
 
 /* register */
@@ -388,9 +427,9 @@ select {
             rgb(32, 34, 155),
             rgb(123, 243, 217)
     );
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     border-radius: 8px;
-    width: 40%;
+    width: 60%;
     padding: 20px 20px 10px 20px;
     overflow-y: hidden;
 }

@@ -10,17 +10,21 @@
 
     <div layout:fragment="content">
 
-        <div class="container login">
+        <div class="containerLogin">
             <div id="log">
                 <form id="loginForm" name="login" th:action="@{/login}" method="post">
-                    <div id="err" th:if="${param.error}">Hibás felhasználói név vagy jelszó</div>
-                    <div th:if="${param.logout}" >Sikeresen kijelentkeztél</div>
-                    <label for="username" >Email cim</label>
-                    <input type="text" id="username" name="username"  placeholder="Email cim" required="true" />
-                    <label for="password" >Jelszó</label>
-                    <input type="password" id="password" name="password" placeholder="Jelszó" required="true" />
-                    <button id="logInButton" type="submit">Belépek</button>
-                    <button id="toRegButton" ><a th:href="@{/register}">Regisztrálok</a></button>
+                    <div id="firstLoginPanelItem">
+                        <div   id="err" th:if="${param.error}">Hibás felhasználói név vagy jelszó</div>
+                        <div th:if="${param.logout}" >Sikeresen kijelentkeztél</div>
+                        <label for="username" >Email cim</label>
+                        <input class="loginInput" type="text" id="username" name="username"  placeholder="Email cim" required="true" />
+                        <label for="password" >Jelszó</label>
+                        <input class="loginInput" type="password" id="password" name="password" placeholder="Jelszó" required="true" />
+                    </div>
+                    <div id="secondLoginPanelItem">
+                        <button id="logInButton" type="submit">Belépek</button>
+                        <button id="toRegButton" ><a th:href="@{/register}">Regisztrálok</a></button>
+                    </div>
                 </form>
             </div>
         </div>
