@@ -13,14 +13,13 @@ public class Role {
     @Column(name = "role_id")
     private Long roleId;
     private String role;
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles" )
     private Set<User> users = new HashSet<>();
 
     public Role() {
     }
 
-    public Role(Long roleId, String role) {
-        this.roleId = roleId;
+    public Role(String role) {
         this.role = role;
     }
 
