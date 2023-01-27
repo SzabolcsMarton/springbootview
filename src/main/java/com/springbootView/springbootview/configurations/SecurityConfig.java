@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,10 +25,10 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests(auth -> {
-                    auth .antMatchers( "/", "/about", "/products").permitAll()
+                    auth .antMatchers( "/", "/about", "/products", "/registration/**").permitAll()
                             .antMatchers( "/css/**", "/img/**", "/fonts/**", "/javascript/**").permitAll()
-                            .antMatchers("/order").hasAuthority("USER")
-                            .antMatchers("/admin/**").hasAnyAuthority("ADMIN", "USER")
+                            .antMatchers("/order").hasRole("USER")
+                            .antMatchers("/admin/**").hasAnyRole("ADMIN", "USER")
                             .anyRequest().authenticated();
                 })
                 .userDetailsService(detailService)
@@ -48,7 +49,7 @@ public class SecurityConfig {
 
     @Bean
     PasswordEncoder passwordEncoder() {
-        //return new BCryptPasswordEncoder();
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
+       // return NoOpPasswordEncoder.getInstance();
     }
 }
