@@ -14,7 +14,7 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
     private String name;
-    @Email(regexp = "^[\\\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$")
+    //@Email(regexp = "^[\\\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$")
     @Column(unique = true, nullable = false)
     private String email;
     private String password;
@@ -27,6 +27,7 @@ public class User {
     private Date registered;
 
     public User() {
+
     }
 
     public User(String name, String email, String password, Set<Role> roles, Address address, Date registered) {

@@ -274,7 +274,7 @@ hr {
     width: 80%;
     height: 1px;
     background-color: white;
-    margin: 0.7rem auto;
+    margin: 0.3rem auto;
 }
 
 .products {
@@ -385,7 +385,7 @@ select {
 #logInButton {
     border: 2px solid black;
     border-radius: 7px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin: 0.2rem;
 }
 
@@ -418,7 +418,7 @@ select {
 }
 
 /* register */
-#register, #log {
+.register, #log {
     font-family: "Poppins", sans-serif;
     margin: 160px auto;
     border: 3px solid rgb(29, 5, 117);
@@ -434,39 +434,43 @@ select {
     overflow-y: hidden;
 }
 
-#register label,
+.register label,
 #log label {
     display: block;
 }
 
-#register textarea {
-    display: block;
-}
-
-#register input,
+.register input,
 #log label {
     margin: 1px 0;
     border-radius: 8px;
+    font-size: 1.2rem;
 }
 
-#register small {
+.register small {
     font-size: 12px;
 }
 
-#regButton {
-    margin: 8px 0;
-    padding: 3px;
-    border: 2px solid black;
-    border-radius: 8px;
+.registerForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-#errorMessage {
-    font-size: 0.9rem;
+.regButton {
+    margin: 8px 0;
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 0.3rem 1rem;
+    font-size: 1rem;
+}
+
+.errorMessage {
+    font-size: 1.2rem;
     color: red;
 }
 
 @media (max-width: 690px) {
-    #register {
+    .register {
         width: 92%;
         margin-top: 170px;
     }
@@ -528,10 +532,21 @@ select {
 }
 
 .button {
-    font-size: 1rem;
+    font-size: 1.1rem;
     border-radius: 5px;
     border: 2px solid black;
     margin: 4px;
+}
+
+.adminbutton{
+    width: 80%;
+    padding: 0.6rem 1.5rem;
+    margin: 0.3rem 0;
+    font-size: 1.5rem;
+}
+
+.adminControllPanel{
+    margin: 1rem 0;
 }
 
 .orderItems {
@@ -561,6 +576,10 @@ select {
 
 .adminPanel {
     color: white;
+}
+
+.adminPanel span{
+    font-size: 1rem;
 }
 
 #adminHeader {
@@ -599,9 +618,10 @@ select {
 }
 
 #checkboxContainer {
+    max-width: 60%;
     display: flex;
     flex-wrap: wrap;
-    margin: 0.5rem 2rem;
+    margin: 0.5rem auto;
 }
 
 #orderAddressField {
