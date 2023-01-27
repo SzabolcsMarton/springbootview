@@ -27,10 +27,16 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String getAdminView(Model model) {
-        model.addAttribute("toppings", toppingService.getAllToppings());
-        return "admin";
+    public String getAdminControllerView() {
+        return "admin_controller";
     }
+
+    @GetMapping(value = "/hamburger")
+    public String getAdminHamburgerView(Model model) {
+        model.addAttribute("toppings", toppingService.getAllToppings());
+        return "admin_hamburger";
+    }
+
 
     @GetMapping(value = "/hamburger/burgerbyname", params = {"hamburgerToFindByName"})
     public String findBurgerByName(String hamburgerToFindByName, Model model) {
@@ -85,7 +91,7 @@ public class AdminController {
     public String addNewTopping(String newTopping, Model model) {
         model.addAttribute("message", toppingService.saveTopping(newTopping) ? "Feltét sikeresen mentve" : "Mentés sikertelen");
         model.addAttribute("toppings", toppingService.getAllToppings());
-        return "admin";
+        return "admin_hamburger";
     }
 
 
