@@ -14,11 +14,14 @@
                 method="GET"
                 id="newHamburgerCreaterForm"
                 accept-charset="utf-8">
-            <H1 id="adminHeader">Hamburger ADMIN felület </H1>
+            <H1 id="adminHeader">Hamburger szerkesztő </H1>
+            <hr/>
+            <span>Új hamburger</span>
+            <hr/>
             <div class="products, menuItem, menuDescription" th:if="${message != null}">
                 <span th:text="${message}"></span>
             </div>
-            <span id="errorMessage"></span>
+            <span class="errorMessage"></span>
             <label for="newHamburgerName">Hamburger neve:</label>
             <input
                     type="text"
@@ -26,7 +29,7 @@
                     id="newHamburgerName"
                     required
                     />
-            <label for="newHamburgerPrice">Hamburger ar:</label>
+            <label for="newHamburgerPrice">Hamburger ára:</label>
             <input
                     type="text"
                     name="price"
@@ -41,13 +44,15 @@
                 </div>
             </div>
 
-            <button id="createNewHamburgerBtn" type="submit">Elkuld</button>
+            <button id="createNewHamburgerBtn" type="submit">Mentés</button>
         </form>
+        <hr/>
+        <span>Feltétek szerkesztése</span>
         <hr/>
         <form th:action="@{admin/hamburger/toppings/addtopping}">
             <label for="addTopping">Új feltét</label>
             <input id="addTopping" type="text" name="newTopping" required>
-            <button type="submit">Mentés</button>
+            <button class="button" type="submit">Mentés</button>
         </form>
         <hr/>
         <form th:action="@{/admin/hamburger/allburger}"
