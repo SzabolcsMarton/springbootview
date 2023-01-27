@@ -16,6 +16,7 @@
                     <div id="firstLoginPanelItem">
                         <div   id="err" th:if="${param.error}">Hibás felhasználói név vagy jelszó</div>
                         <div th:if="${param.logout}" >Sikeresen kijelentkeztél</div>
+                        <div th:if="${message}" th:text="${message}" >Sikeresen regisztráció</div>
                         <label for="username" >Email cim</label>
                         <input class="loginInput" type="text" id="username" name="username"  placeholder="Email cim" required="true" />
                         <label for="password" >Jelszó</label>
@@ -23,7 +24,7 @@
                     </div>
                     <div id="secondLoginPanelItem">
                         <button id="logInButton" type="submit">Belépek</button>
-                        <button id="toRegButton" ><a th:href="@{/register}">Regisztrálok</a></button>
+                        <button id="toRegButton" ><a th:href="@{/registration/register/user}">Regisztrálok</a></button>
                     </div>
                 </form>
             </div>
