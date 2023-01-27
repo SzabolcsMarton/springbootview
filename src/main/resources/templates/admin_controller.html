@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="leiras adminPanel">
+        <H1>Admin irányító panel</H1>
+        <hr/>
+        <div class="adminControllPanel">
+            <form th:action="@{/admin/hamburger}"
+                  method="GET">
+                <button type="submit" class="button adminbutton">Hamburger</button>
+            </form>
+            <form
+                    method="GET">
+                <button type="submit" class="button adminbutton">Felhasználók</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
