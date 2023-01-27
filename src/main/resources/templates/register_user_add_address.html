@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container login">
+        <div class="register">
+            <form th:action="@{/registration/register}" method="POST" th:object="${addressDto}" class="registerForm" >
+                <H2>Lakcím megadás</H2>
+                <span th:if="${message}" th:text="${message}" ></span>
+                <span id="err" th:if="${param.error}" th:text="${param.error.message}">a</span>
+                <label for="orderCity">Város:</label>
+                <input type="hidden" name="userId" th:value="${addressDto.userId}" th:field="*{userId}">
+                <input class="loginInput"type="text" name="city" id="orderCity" th:field="*{city}" required/>
+                <label for="orderStreet">Út/utca:</label>
+                <input class="loginInput" type="text" name="street" id="orderStreet" th:field="*{street}" required/>
+                <label for="orderHouseNumber">Ház sz.:</label>
+                <input class="loginInput" type="text" name="number" id="orderHouseNumber" th:field="*{houseNumber}" required/>
+                <label for="orderZip">Ir. szám:</label>
+                <input class="loginInput" type="text" name="zip" id="orderZip" th:field="*{zip}" required/>
+                <label for="orderPhone">Tel.:</label>
+                <input class="loginInput" type="text" name="phone" id="orderPhone" th:field="*{phone}" required/>
+                <br/>
+                <button class="regButton" type="submit">Regisztralok</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
