@@ -38,12 +38,12 @@
                 <li>
                     <a href="http://localhost:8080/order">Order</a>
                 </li>
-                <li>
+                <li sec:authorize="hasRole('ADMIN')">
                     <a href="http://localhost:8080/admin">Admin</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <div>
-                        Üdvözlünk <span  sec:authentication="name">Vendég</span>
+                    <div id="navBarUser">
+                        <span id="welcomeText">Üdvözlünk</span>
                         <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" >
                             <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Kijelentkezés</a>
                         </form>
