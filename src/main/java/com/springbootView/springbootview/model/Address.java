@@ -86,4 +86,9 @@ public class Address {
     public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
     }
+
+    @Override
+    public String toString() {
+        return zip + " " + city + " " + street + " " + houseNumber;
+    }
 }
