@@ -10,15 +10,18 @@
 <div layout:fragment="content">
     <div class="leiras adminPanel">
         <H1>Admin irányító panel</H1>
-        <hr/>
         <div class="adminControllPanel">
             <form th:action="@{/admin/hamburger}"
                   method="GET">
-                <button type="submit" class="button adminbutton">Hamburger</button>
+                <button type="submit" class="button adminbutton">Hamburgerek</button>
             </form>
             <form
                     method="GET">
-                <button type="submit" class="button adminbutton">Felhasználók</button>
+                <button type="submit" class="button adminbutton" disabled>Felhasználók</button>
+            </form>
+            <form th:action="@{/admin/orders}"
+                    method="GET">
+                <button type="submit" class="button adminbutton">Rendelések</button>
             </form>
         </div>
 

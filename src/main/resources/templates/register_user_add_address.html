@@ -19,16 +19,16 @@
                 <label for="orderCity">Város:</label>
                 <input type="hidden" name="userId" th:value="${addressDto.userId}" th:field="*{userId}">
                 <input class="loginInput"type="text" name="city" id="orderCity" th:field="*{city}" required/>
-                <label for="orderStreet">Út/utca:</label>
+                <label for="orderStreet">Út / utca:</label>
                 <input class="loginInput" type="text" name="street" id="orderStreet" th:field="*{street}" required/>
-                <label for="orderHouseNumber">Ház sz.:</label>
+                <label for="orderHouseNumber">Házszám.:</label>
                 <input class="loginInput" type="text" name="number" id="orderHouseNumber" th:field="*{houseNumber}" required/>
-                <label for="orderZip">Ir. szám:</label>
+                <label for="orderZip">Irányító szám:</label>
                 <input class="loginInput" type="text" name="zip" id="orderZip" th:field="*{zip}" required/>
-                <label for="orderPhone">Tel.:</label>
+                <label for="orderPhone">Telefonszám:</label>
                 <input class="loginInput" type="text" name="phone" id="orderPhone" th:field="*{phone}" required/>
                 <br/>
-                <button class="regButton" type="submit">Regisztralok</button>
+                <button class="regButton" type="submit">Regisztrálok</button>
             </form>
         </div>
     </div>

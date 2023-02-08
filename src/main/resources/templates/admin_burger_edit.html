@@ -9,39 +9,42 @@
 <body>
 <div layout:fragment="content">
     <div class="leiras">
-
         <div class="newburgercard" th:if="${burgerById != null}">
+            <h2 th:text="${burgerById.name}"></h2>
             <div class="menuDescription">
-                <h2 th:text="${burgerById.name}"></h2>
                 <span class="burgertoppings" th:each="currentTopping: ${burgerById.toppings}"
                       th:text="${currentTopping.name}"></span>
-                <span th:text="${burgerById.price}"></span>
             </div>
-            <form th:action="@{/admin/hamburger/edit}" method="GET">
-                <input type="hidden" name="editId" th:value="${burgerById.id}"/>
-                <button class="button">Szerkeszt</button>
-            </form>
-            <form th:action="@{/admin/hamburger/delete}" method="GET">
-                <input hidden name="deleteId" th:value="${burgerById.id}">
-                <button type="submit" class="button">Törlés</button>
-            </form>
+            <span class="menuDescriptionPrice" th:text="${burgerById.price}"></span>
+            <div class="burgerEditButtons">
+                <form th:action="@{/admin/hamburger/edit}" method="GET">
+                    <input type="hidden" name="editId" th:value="${burgerById.id}"/>
+                    <button class="button">Szerkeszt</button>
+                </form>
+                <form th:action="@{/admin/hamburger/delete}" method="GET">
+                    <input hidden name="deleteId" th:value="${burgerById.id}">
+                    <button type="submit" class="button">Törlés</button>
+                </form>
+            </div>
         </div>
 
         <div class="newburgercard" th:if="${burgerByName != null}">
+            <h2 th:text="${burgerByName.name}"></h2>
             <div class="menuDescription">
-                <h2 th:text="${burgerByName.name}"></h2>
                 <span class="burgertoppings" th:each="currentTopping: ${burgerByName.toppings}"
                       th:text="${currentTopping.name}"></span>
-                <span th:text="${burgerByName.price}"></span>
             </div>
-            <form th:action="@{/admin/hamburger/edit}" method="GET">
-                <input type="hidden" name="editId" th:value="${burgerByName.id}"/>
-                <button class="button">Szerkeszt</button>
-            </form>
-            <form th:action="@{/admin/hamburger/delete}" method="GET">
-                <input hidden name="deleteId" th:value="${burgerByName.id}">
-                <button type="submit" class="button">Törlés</button>
-            </form>
+            <span class="menuDescriptionPrice" th:text="${burgerByName.price}"></span>
+            <div class="burgerEditButtons">
+                <form th:action="@{/admin/hamburger/edit}" method="GET">
+                    <input type="hidden" name="editId" th:value="${burgerByName.id}"/>
+                    <button class="button">Szerkeszt</button>
+                </form>
+                <form th:action="@{/admin/hamburger/delete}" method="GET">
+                    <input hidden name="deleteId" th:value="${burgerByName.id}">
+                    <button type="submit" class="button">Törlés</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
