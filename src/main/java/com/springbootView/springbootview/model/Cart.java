@@ -19,15 +19,14 @@ public class Cart {
     private List<OrderItem> orderItems = new ArrayList<>();
     private boolean delivery;
     private int sumOfAllItemPrices;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Address address;
+    private String address;
     private Date timeOfOrder = new Date();
 
 
     public Cart() {
     }
 
-    public Cart(List<OrderItem> orderItems, boolean delivery, int sumOfAllItemPrices, Address address) {
+    public Cart(List<OrderItem> orderItems, boolean delivery, int sumOfAllItemPrices, String address) {
         this.orderItems = orderItems;
         this.delivery = delivery;
         this.sumOfAllItemPrices = getTotalPrice(orderItems, delivery);
@@ -76,11 +75,11 @@ public class Cart {
         this.sumOfAllItemPrices = sumOfAllItemPrices;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

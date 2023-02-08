@@ -23,9 +23,6 @@ public class ToppingService {
 
     public boolean saveTopping(String toppingName){
         Topping topping = toppingRepository.save(new Topping(toppingName));
-        if (topping == null){
-            return false;
-        }
         return true;
     }
 }

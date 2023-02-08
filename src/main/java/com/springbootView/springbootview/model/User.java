@@ -26,6 +26,7 @@ public class User {
     private Address address;
     private Date registered;
 
+
     public User() {
 
     }
