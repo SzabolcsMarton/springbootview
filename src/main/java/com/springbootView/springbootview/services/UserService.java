@@ -38,6 +38,10 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found with id: " + id));
     }
 
+    public User getOneUserByEmail(String email){
+        return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException("User not found with email: " + email));
+    }
+
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
