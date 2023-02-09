@@ -97,8 +97,14 @@ public class AdminController {
         return "admin_hamburger";
     }
     @GetMapping(value = "/orders")
-    public String getAllOrders( Model model) {
+    public String getAllOrders(Model model) {
         model.addAttribute("carts", orderService.getAllOrders());
+        return "admin_orders";
+    }
+
+    @GetMapping(value = "/orders/orderedby", params = "orderType")
+    public String getAllOrdersOrderedBy(Model model, String orderType ) {
+        model.addAttribute("carts", orderService.getAllOrdersOrderedBy(orderType));
         return "admin_orders";
     }
 
@@ -108,6 +114,8 @@ public class AdminController {
         model.addAttribute("cart",cart);
         return "admin_orders_cart";
     }
+
+
 
 
 
