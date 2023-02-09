@@ -13,12 +13,16 @@ public class Cart {
     @GeneratedValue(generator = "seqGenCart")
     @Column(name = "cart_id")
     private Long cartId;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private String name;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "cart_orderitems", joinColumns = {@JoinColumn(name = "cart_id")}, inverseJoinColumns = {
             @JoinColumn(name = "order_item_id")})
     private List<OrderItem> orderItems = new ArrayList<>();
     private boolean delivery;
     private int sumOfAllItemPrices;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
     private String address;
     private Date timeOfOrder = new Date();
 
@@ -26,11 +30,13 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(List<OrderItem> orderItems, boolean delivery, int sumOfAllItemPrices, String address) {
+    public Cart(List<OrderItem> orderItems, boolean delivery, String address, User user) {
         this.orderItems = orderItems;
         this.delivery = delivery;
         this.sumOfAllItemPrices = getTotalPrice(orderItems, delivery);
         this.address = address;
+        this.name = user.getName();
+        this.user = user;
     }
 
     public List<OrderItem> getOrderItems() {
@@ -99,18 +105,34 @@ public class Cart {
         this.timeOfOrder = timeOfOrder;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        this.name = user.getName();
+    }
+
     @Override
     public String toString() {
-        return "Order{" +
-                "id=" + cartId +
+        return "Cart{" +
+                "cartId=" + cartId +
+                ", name='" + name + '\'' +
                 ", orderItems=" + orderItems +
                 ", delivery=" + delivery +
                 ", sumOfAllItemPrices=" + sumOfAllItemPrices +
-                ", address=" + address +
+                ", user=" + user +
+                ", address='" + address + '\'' +
                 ", timeOfOrder=" + timeOfOrder +
                 '}';
     }
-
-
-
 }

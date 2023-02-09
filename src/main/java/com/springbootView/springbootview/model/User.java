@@ -2,9 +2,7 @@ package com.springbootView.springbootview.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class User {
@@ -24,6 +22,10 @@ public class User {
     private Set<Role> roles = new HashSet<>();
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "users_carts", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {
+            @JoinColumn(name = "cart_id")})
+    private List<Cart> orders = new ArrayList<>();
     private Date registered;
 
 
@@ -31,12 +33,13 @@ public class User {
 
     }
 
-    public User(String name, String email, String password, Set<Role> roles, Address address, Date registered) {
+    public User(String name, String email, String password, Set<Role> roles, Address address,List<Cart> orders, Date registered) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.roles = roles;
         this.address = address;
+        this.orders = orders;
         this.registered = registered;
     }
 
@@ -94,6 +97,22 @@ public class User {
 
     public void setRegistered(Date registered) {
         this.registered = registered;
+    }
+
+    public List<Cart> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Cart> orders) {
+        this.orders = orders;
+    }
+
+    public void addOrder(Cart cart){
+        this.orders.add(cart);
+    }
+
+    public void removeOrder(Cart cart){
+        this.orders.remove(cart);
     }
 
     public void addRole(Role role) {
