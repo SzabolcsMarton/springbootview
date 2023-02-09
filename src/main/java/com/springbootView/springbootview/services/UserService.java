@@ -49,11 +49,17 @@ public class UserService {
     public void addRole(Long id, Role role){
         User user = getOneUserById(id);
         user.addRole(role);
+        userRepository.save(user);
     }
 
     public void removeRole(Long id, Role role){
         User user = getOneUserById(id);
         user.removeRole(role);
+        userRepository.save(user);
+    }
+
+    public void saveUser(User user){
+        userRepository.save(user);
     }
 
     public User saveUserFromDto(UserRegisterDto userRegisterDto){
