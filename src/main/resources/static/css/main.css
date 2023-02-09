@@ -243,7 +243,7 @@ hr {
 }
 
 .productPrice{
-    margin: 0.2rem auto;
+    margin: 0.4rem auto;
     font-size: 1.3rem;
 }
 
@@ -305,7 +305,7 @@ hr {
 }
 
 .menuItem h2 {
-    margin: 0.2rem auto;
+    margin: 0.4rem auto;
 }
 
 .login {
@@ -415,9 +415,19 @@ select {
     }
 }
 
+.register h2,
+.register h3{
+    margin: 0.3rem auto;
+}
+
 .register label,
 #log label {
     display: block;
+}
+
+.registerMessage{
+    margin: 0.2rem auto;
+    font-size: 1rem;
 }
 
 #log h2 {
@@ -520,6 +530,11 @@ select {
     cursor: pointer;
 }
 
+.allOrdersButton{
+    font-size: 1.3rem;
+    padding: 0.6rem 3rem;
+}
+
 .adminbutton {
     width: 80%;
     padding: 0.6rem 1.5rem;
@@ -550,12 +565,6 @@ select {
 
 .table th{
     border-bottom: 2px solid white;
-}
-
-#tableOfAllOrders,
-#tableOfACart{
-    border-collapse: collapse;
-    padding: 0 1rem;
 }
 
 .orderOpenButton{
