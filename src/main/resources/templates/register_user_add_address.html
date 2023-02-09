@@ -13,8 +13,9 @@
     <div class="container login">
         <div class="register">
             <form th:action="@{/registration/register}" method="POST" th:object="${addressDto}" class="registerForm" >
-                <H2>Lakcím megadás</H2>
-                <span th:if="${message}" th:text="${message}" ></span>
+                <h2>Regisztráció</h2>
+                <H3>Lakcím adatok</H3>
+                <span class="registerMessage" th:if="${message}" th:text="${message}" ></span>
                 <span id="err" th:if="${param.error}" th:text="${param.error.message}">a</span>
                 <label for="orderCity">Város:</label>
                 <input type="hidden" name="userId" th:value="${addressDto.userId}" th:field="*{userId}">

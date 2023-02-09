@@ -13,7 +13,8 @@
     <div class="container login">
         <div class="register">
             <form th:action="@{/registration/register/address}"  method="POST" th:object="${userDto}" class="registerForm">
-                <h2>Fiók adatok</h2>
+                <h2>Regisztráció</h2>
+                <h3>Fiók adatok</h3>
                 <span class="errorMessage" th:if="${message}" th:text="${message}" ></span>
                 <label for="regName">Név:</label>
                 <input class="loginInput" type="text" name="name" id="regName" th:field="*{name}"required/>

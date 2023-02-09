@@ -10,10 +10,26 @@
 <div layout:fragment="content">
     <div class="tableLeiras adminPanel">
         <H1>Admin Rendelések panel</H1>
+        <div>
+
+            <form class="adminOrderBy" th:action="@{/admin/orders/orderedby}">
+                <span>Rendezés</span>
+                <button type="submit" th:name="orderType" th:value="nameAsc">Név ˄</button>
+                <button type="submit" th:name="orderType" th:value="nameDesc">Név ˅</button>
+                <button type="submit" th:name="orderType" th:value="priceAsc">Érték ˄</button>
+                <button type="submit" th:name="orderType" th:value="priceDesc">Érték ˅</button>
+                <button type="submit" th:name="orderType" th:value="dateAsc">Dátum ˄</button>
+                <button type="submit" th:name="orderType" th:value="dateDesc">Dátum ˅</button>
+            </form>
+            <!--  ˄  ˅  -->
+
+        </div>
+
         <table id="tableOfAllOrders" class="table nyitva">
             <thead>
             <tr>
                 <th>Azonotó</th>
+                <th>Név</th>
                 <th>Cím</th>
                 <th>Kiszállitás</th>
                 <th>Össz érték</th>
@@ -22,23 +38,25 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="cart: ${carts}" >
+            <tr th:each="cart: ${carts}">
                 <td th:text="${cart.cartId}"></td>
+                <td th:text="${cart.name}"></td>
                 <td th:text="${cart.address}"></td>
-                <td th:text="${cart.delivery}"></td>
+                <td th:text="${cart.delivery} ? 'Igen' : 'Nem'"></td>
                 <td th:text="${cart.sumOfAllItemPrices}"></td>
                 <td th:text="${#dates.format(cart.timeOfOrder, 'yyyy-MM-dd   HH:mm')}"></td>
-                <td class="orderOpenButton"><form th:action="@{/admin/orders/cart}"
-                          method="GET">
-                    <input type="hidden" name="cartIdForOpen" th:value="${cart.cartId}"/>
-                    <button type="submit" class="button" >Megnyit</button>
-                </form></td>
+                <td class="orderOpenButton">
+                    <form th:action="@{/admin/orders/cart}" method="GET">
+                        <input type="hidden" name="cartIdForOpen" th:value="${cart.cartId}"/>
+                        <button type="submit" class="button">Megnyit</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
-        </div>
-
     </div>
+
+</div>
 
 </body>
 </html>
