@@ -11,34 +11,45 @@
     <main>
         <div class="leiras  orderContainer">
             <h1>Rendelés összesítő</h1>
-            <div class="orderItems" >
-                <div th:each="item: ${cart.orderItems}">
-                    <div th:if="${item.quantity > 0}">
-                        <span th:text="${item.hamburgerName}"></span><span>: </span><span
-                            th:text="${item.quantity}"></span><span> db összesen: </span><span th:text="${item.sumOfPrice}"></span><span> Ft.</span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="delivery" th:if="${cart.delivery}">
-                <span>Kiszállitás: 500</span><span> Ft.</span>
-                <p class="deliveryAddressItem" th:text="${#dates.format(cart.timeOfOrder, 'yyyy-MM-dd HH:mm')}" ></p>
+            <table id="tableOfOrders" class="table nyitva">
+                <thead>
+                    <tr>
+                        <th>Azonosító</th>
+                        <th>Egységár</th>
+                        <th>Mennyiség</th>
+                        <th>Összesen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item: ${cart.orderItems}" th:if="${item.quantity > 0}">
+                        <td th:text="${item.hamburgerName}"></td>
+                        <td th:text="${item.price}"></td>
+                        <td th:text="${item.quantity}"></td>
+                        <td th:text="${item.sumOfPrice}"></td>
+                    </tr>
+                    <tr th:if="${cart.delivery}">
+                        <td>Kiszállítás</td>
+                        <td>500</td>
+                        <td>1</td>
+                        <td>500</td>
+                    </tr>
+                    <tr id="sumPrice" >
+                        <td>Végösszeg</td>
+                        <td colspan="2"></td>
+                        <td th:text="${cart.sumOfAllItemPrices}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr/>
+            <div class="delivery">
+                <p class="deliveryAddressItem">Dátum: <span th:text="${#dates.format(cart.timeOfOrder, 'yyyy-MM-dd   HH:mm')}"></span></p>
+                <p class="deliveryAddressItem">Cím: <span th:text="${address.toString}"></span></p>
             </div>
-
-            <div class="delivery ">
-                <h3>Szállitási cím</h3>
-                <p class="deliveryAddressItem">Név: <span th:text="${address.name}"></span></p>
-                <p class="deliveryAddressItem">Város: <span th:text="${address.zip}"></span> <span th:text="${address.city}"></span></p>
-                <p class="deliveryAddressItem">Utca: <span th:text="${address.street}"></span> <span th:text="${address.houseNumber}"></span></p>
-                <p class="deliveryAddressItem" >Tel. :<span th:text="${address.phone}"></span></p>
-            </div>
-
-            <div  class="delivery">
-                <span>Végösszeg:</span><span th:text="${cart.sumOfAllItemPrices}"></span><span> Ft.</span>
-                <form method="GET" th:action="@{/}">
-                    <button type="submit">Kezdő oldal</button>
-                </form>
-            </div>
+            <hr/>
+            <form class="mainPageButton" method="GET" th:action="@{/}">
+                <button class="button" type="submit">Kezdő oldal</button>
+            </form>
         </div>
     </main>
 </div>

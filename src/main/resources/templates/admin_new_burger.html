@@ -14,7 +14,7 @@
         </div>
         <div class="newburgercard" th:if="${newburger != null}">
             <span > Hamburger sikeresen elmentve</span>
-            <div class="menuDescription">
+            <div class="menuDescription ">
                 <h2 th:text="${newburger.name}"></h2>
                 <span class="burgertoppings" th:each="currentTopping: ${newburger.toppings}"
                       th:text="${currentTopping.name}"></span>

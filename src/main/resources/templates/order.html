@@ -15,35 +15,47 @@
             <form class="leiras" method="GET" th:action="@{/order/hamburger}">
                 <h1>Hamburger rendelés</h1>
                 <hr/>
-                <div id="orderAddressField">
-                    <div>
-                        <label for="orderName">Név:</label>
-                        <input type="text" name="name" id="orderName" required/>
-                    </div>
-                    <div>
-                        <label for="orderCity">Város:</label>
-                        <input type="text" name="city" id="orderCity" required/>
-                    </div>
-                    <div>
-                        <label for="orderStreet">Út/utca:</label>
-                        <input type="text" name="street" id="orderStreet" required/>
-                    </div>
-                    <div>
-                        <label for="orderHouseNumber">Ház sz.:</label>
-                        <input type="text" name="number" id="orderHouseNumber" required/>
-                    </div>
-                    <div>
-                        <label for="orderZip">Ir. szám:</label>
-                        <input type="text" name="zip" id="orderZip" required/>
-                    </div>
-                    <div>
-                        <label for="orderPhone">Tel.:</label>
-                        <input type="text" name="phone" id="orderPhone" required/>
+                <div class="addressChooser">
+                    <span class="chooseAddressText">Ha nem a regisztrált cimre szeretné a kiszállítást,</span><span class="chooseAddressText"> adja meg a címet!</span>
+                    <br/>
+                    <input type="radio" id="addressRadioUser" name="addressType" value="user" checked onchange="hideAddressPanel()" >
+                    <label for="addressRadioUser" >Saját cím</label>
+                    <input type="radio" id="addressRadioOther" name="addressType" value="other" onchange="showAddressPanel()">
+                    <label for="addressRadioOther">Másik cím</label><br>
+                </div>
+
+                <div id="addressPanel">
+                    <div id="orderAddressField" >
+                        <div >
+                            <label for="orderName">Név:</label>
+                            <input class="addressPanelInput" type="text" name="name" id="orderName" />
+                        </div>
+                        <div>
+                            <label for="orderCity">Város:</label>
+                            <input  class="addressPanelInput" type="text" name="city" id="orderCity" />
+                        </div>
+                        <div>
+                            <label for="orderStreet">Út/utca:</label>
+                            <input class="addressPanelInput" type="text" name="street" id="orderStreet" r/>
+                        </div>
+                        <div>
+                            <label for="orderHouseNumber">Ház sz.:</label>
+                            <input class="addressPanelInput" type="text" name="number" id="orderHouseNumber" />
+                        </div>
+                        <div>
+                            <label for="orderZip">Ir. szám:</label>
+                            <input class="addressPanelInput" type="text" name="zip" id="orderZip" />
+                        </div>
+                        <div>
+                            <label for="orderPhone">Tel.:</label>
+                            <input class="addressPanelInput" type="text" name="phone" id="orderPhone" />
+                        </div>
                     </div>
                 </div>
+
                 <hr/>
                 <div id="burgerDarabSelect">
-                    <div th:each="burger: ${allhamburger}">
+                    <div class="orderPageItems" th:each="burger: ${allhamburger}">
                         <label th:for="${burger.name}" th:text="${burger.name}">Burger</label>
                         <input type="range" th:name="${burger.name}" min="0" max="15" value="0"
                                oninput="this.nextElementSibling.value = this.value">
@@ -51,19 +63,20 @@
                         <br/>
                     </div>
                 </div>
+                </br>
                 <div id="szallitas">
-                    <p>Kiszallitas (500 Ft)</p>
+                    <span>Kiszállítás (500 Ft)</span>
                     <input
                             type="checkbox"
                             id="szallitIgen"
                             name="szallit"
                             value="true"
                     />
-                    <label id="szallitIgenLabel" for="szallitIgen">Igen</label><br/>
+                    <br/>
                 </div>
                 <hr/>
 
-                <button id="cart-button" type="submit">Rendeles</button>
+                <button class="button" id="cart-button" type="submit">Rendeles</button>
             </form>
         </div>
     </main>

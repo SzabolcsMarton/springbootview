@@ -11,13 +11,12 @@
     <main>
         <ul class="products" th:each="burger: ${allhamburger}">
             <li class="menuItem">
+                <h2 th:text="${burger.name}"></h2>
                 <div class="menuDescription">
-                    <h2 th:text="${burger.name}"></h2>
                     <span class="burgertoppings" th:each="currentTopping: ${burger.toppings}"
                           th:text="${currentTopping.name}"></span>
-                    <span th:text="${burger.price}"></span>
-
                 </div>
+                <span><span class="productPrice" th:text="${burger.price}"></span> -Ft.</span>
             </li>
         </ul>
     </main>

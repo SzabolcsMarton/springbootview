@@ -9,30 +9,29 @@
 <body>
 <div layout:fragment="content">
     <div class="leiras adminPanel">
+        <H1 id="adminHeader">Hamburger szerkesztő </H1>
         <form
                 th:action="@{/admin/hamburger/addnewburger}"
                 method="GET"
                 id="newHamburgerCreaterForm"
                 accept-charset="utf-8">
-            <H1 id="adminHeader">Hamburger ADMIN felület </H1>
+            <hr/>
+            <span>Új hamburger</span>
+            <hr/>
             <div class="products, menuItem, menuDescription" th:if="${message != null}">
                 <span th:text="${message}"></span>
             </div>
-            <span id="errorMessage"></span>
-            <label for="newHamburgerName">Hamburger neve:</label>
-            <input
-                    type="text"
-                    name="name"
-                    id="newHamburgerName"
-                    required
-                    />
-            <label for="newHamburgerPrice">Hamburger ar:</label>
-            <input
-                    type="text"
-                    name="price"
-                    id="newHamburgerPrice"
-                    required
-                    />
+            <span class="errorMessage"></span>
+            <div class="newBurgerNamePriceLabel">
+                <div class="burgerEditorinput">
+                    <label for="newHamburgerName">Hamburger neve:</label>
+                    <input type="text" name="name" id="newHamburgerName" required />
+                </div>
+                <div class="burgerEditorinput">
+                    <label for="newHamburgerPrice">Hamburger ára:</label>
+                    <input type="text" name="price" id="newHamburgerPrice" required />
+                </div>
+            </div>
 
             <div id="checkboxContainer">
                 <div class="toppingCheckbox" th:each="topping: ${toppings}">
@@ -41,27 +40,31 @@
                 </div>
             </div>
 
-            <button id="createNewHamburgerBtn" type="submit">Elkuld</button>
+            <button class="button" id="createNewHamburgerBtn " type="submit">Mentés</button>
         </form>
+        <hr/>
+        <span>Feltétek szerkesztése</span>
         <hr/>
         <form th:action="@{admin/hamburger/toppings/addtopping}">
             <label for="addTopping">Új feltét</label>
             <input id="addTopping" type="text" name="newTopping" required>
-            <button type="submit">Mentés</button>
+            <button class="button" type="submit">Mentés</button>
         </form>
         <hr/>
-        <form th:action="@{/admin/hamburger/allburger}"
-              method="GET">
-            <button type="submit" class="button">Összes Hamburger</button>
-        </form>
+        <span>Hamburger módositás</span>
+        <hr/>
         <form th:action="@{/admin/hamburger/burgerbyname}" id="adminBurgerSearch">
-            <label for="hamburgerToFind">Hamburger Neve:</label>
+            <label id="searchlabel" for="hamburgerToFind">Hamburger Neve:</label>
             <input
                     type="text"
                     name="hamburgerToFindByName"
                     id="hamburgerToFind"
                     required/>
-            <button type="submit" id="hambSearchBtn">Keres</button>
+            <button class="button" type="submit" id="hambSearchBtn">Keres</button>
+        </form>
+        <form th:action="@{/admin/hamburger/allburger}"
+              method="GET">
+            <button type="submit" id="allBurgerButton" class="button">Összes Hamburger</button>
         </form>
     </div>
 </div>

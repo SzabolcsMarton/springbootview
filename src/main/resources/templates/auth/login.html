@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymleaf.org"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="containerLogin">
+            <div id="log">
+                <h2>Bejelentkezés</h2>
+                <form id="loginForm" name="login" th:action="@{/login}" method="post">
+                    <div id="firstLoginPanelItem">
+                        <div   id="err" th:if="${param.error}">Hibás felhasználói név vagy jelszó</div>
+                        <div th:if="${param.logout}" >Sikeresen kijelentkeztél</div>
+                        <div th:if="${message}" th:text="${message}" >Sikeresen regisztráció</div>
+                        <label for="username" >Email cim</label>
+                        <input class="loginInput" type="text" id="username" name="username"  placeholder="Email cim" required />
+                        <label for="password" >Jelszó</label>
+                        <input class="loginInput" type="password" id="password" name="password" placeholder="Jelszó" required />
+                    </div>
+                    <div id="secondLoginPanelItem">
+                        <button id="logInButton" type="submit">Belépek</button>
+                        <button id="toRegButton" ><a th:href="@{/registration/register/user}">Regisztrálok</a></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

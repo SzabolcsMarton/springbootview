@@ -1,7 +1,8 @@
 package com.springbootView.springbootview.controller;
 
-import com.springbootView.springbootview.model.Hamburger;
+import com.springbootView.springbootview.model.Cart;
 import com.springbootView.springbootview.services.AdminService;
+import com.springbootView.springbootview.services.OrderService;
 import com.springbootView.springbootview.services.ToppingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,18 +20,26 @@ public class AdminController {
 
     private final AdminService adminService;
     private final ToppingService toppingService;
+    private final OrderService orderService;
 
     @Autowired
-    public AdminController(AdminService adminService, ToppingService toppingService) {
+    public AdminController(AdminService adminService, ToppingService toppingService, OrderService orderService) {
         this.adminService = adminService;
         this.toppingService = toppingService;
+        this.orderService = orderService;
     }
 
     @GetMapping()
-    public String getAdminView(Model model) {
-        model.addAttribute("toppings", toppingService.getAllToppings());
-        return "admin";
+    public String getAdminControllerView() {
+        return "admin_controller";
     }
+
+    @GetMapping(value = "/hamburger")
+    public String getAdminHamburgerView(Model model) {
+        model.addAttribute("toppings", toppingService.getAllToppings());
+        return "admin_hamburger";
+    }
+
 
     @GetMapping(value = "/hamburger/burgerbyname", params = {"hamburgerToFindByName"})
     public String findBurgerByName(String hamburgerToFindByName, Model model) {
@@ -85,8 +94,22 @@ public class AdminController {
     public String addNewTopping(String newTopping, Model model) {
         model.addAttribute("message", toppingService.saveTopping(newTopping) ? "Feltét sikeresen mentve" : "Mentés sikertelen");
         model.addAttribute("toppings", toppingService.getAllToppings());
-        return "admin";
+        return "admin_hamburger";
     }
+    @GetMapping(value = "/orders")
+    public String getAllOrders( Model model) {
+        model.addAttribute("carts", orderService.getAllOrders());
+        return "admin_orders";
+    }
+
+    @GetMapping(value = "/orders/cart", params = {"cartIdForOpen"})
+    public String getOneCart(Long cartIdForOpen, Model model) {
+        Cart cart = orderService.getCartById(cartIdForOpen);
+        model.addAttribute("cart",cart);
+        return "admin_orders_cart";
+    }
+
+
 
 
 }

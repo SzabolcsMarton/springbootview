@@ -16,6 +16,8 @@ public class Address {
     private String houseNumber;
     private String zip;
     private String phone;
+    @OneToOne(mappedBy = "address")
+    private User user;
 
     public Address() {
     }
@@ -83,5 +85,10 @@ public class Address {
 
     public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
+    }
+
+    @Override
+    public String toString() {
+        return zip + " " + city + " " + street + " " + houseNumber;
     }
 }

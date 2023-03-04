@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container login">
+        <div class="register">
+            <form th:action="@{/registration/register/address}"  method="POST" th:object="${userDto}" class="registerForm">
+                <h2>Fiók adatok</h2>
+                <span class="errorMessage" th:if="${message}" th:text="${message}" ></span>
+                <label for="regName">Név:</label>
+                <input class="loginInput" type="text" name="name" id="regName" th:field="*{name}"required/>
+                <label for="regEmail">E-mail:</label>
+                <input class="loginInput" type="text" name="email" id="regEmail" th:field="*{email}" required/>
+                <label for="regPassword">Jelszó:</label>
+                <input class="loginInput" type="password" name="password" id="regPassword" th:field="*{password}" required/><br/>
+                <label for="regPassword2">Jelszó újra:</label>
+                <input class="loginInput" type="password" name="password2" id="regPassword2" th:field="*{password2}" required/>
+                <small>A jelszó minimum 6 karakter kell legyen</small><br/>
+                <button class="regButton" type="submit">Tovább</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
