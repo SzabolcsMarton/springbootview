@@ -1,7 +1,7 @@
 package com.springbootView.springbootview.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -19,21 +19,21 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {
             @JoinColumn(name = "role_id")})
-    private Set<Role> roles = new HashSet<>();
+    private List<Role> roles = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "users_carts", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {
             @JoinColumn(name = "cart_id")})
     private List<Cart> orders = new ArrayList<>();
-    private Date registered;
+    private LocalDate registered;
+    private boolean vip;
 
 
     public User() {
-
     }
 
-    public User(String name, String email, String password, Set<Role> roles, Address address,List<Cart> orders, Date registered) {
+    public User(String name, String email, String password, List<Role> roles, Address address, List<Cart> orders, LocalDate registered, boolean vip) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -41,6 +41,7 @@ public class User {
         this.address = address;
         this.orders = orders;
         this.registered = registered;
+        this.vip = vip;
     }
 
     public String getPassword() {
@@ -75,11 +76,11 @@ public class User {
         this.email = email;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
@@ -91,11 +92,11 @@ public class User {
         this.address = address;
     }
 
-    public Date getRegistered() {
+    public LocalDate getRegistered() {
         return registered;
     }
 
-    public void setRegistered(Date registered) {
+    public void setRegistered(LocalDate registered) {
         this.registered = registered;
     }
 
@@ -121,5 +122,13 @@ public class User {
 
     public void removeRole(Role role) {
         this.roles.remove(role);
+    }
+
+    public boolean isVip() {
+        return vip;
+    }
+
+    public void setVip(boolean hasVip) {
+        this.vip = hasVip;
     }
 }

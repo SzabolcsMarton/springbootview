@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="tableLeiras adminPanel">
+        <H1>Admin Felhasználók panel</H1>
+
+        <table id="tableOfAllUsers" class="table nyitva">
+            <thead>
+            <tr>
+                <th>Azonosító</th>
+                <th>Név</th>
+                <th>Cím</th>
+                <th>Részletesen</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="actual: ${users}">
+                <td th:text="${actual.userId}"></td>
+                <td th:text="${actual.name}"></td>
+                <td th:text="${actual.address}"></td>
+                <td class="orderOpenButton">
+                    <form th:action="@{/admin/users/user}" method="GET">
+                        <input type="hidden" name="userIdForOpen" th:value="${actual.userId}"/>
+                        <button type="submit" class="button">Megnyit</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <form th:action="@{/admin}" method="GET">
+                <button type="submit" class="button allBurgerButton">Admin főoldal</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

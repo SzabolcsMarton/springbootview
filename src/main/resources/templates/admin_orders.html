@@ -10,8 +10,8 @@
 <div layout:fragment="content">
     <div class="tableLeiras adminPanel">
         <H1>Admin Rendelések panel</H1>
+        <hr/>
         <div>
-
             <form class="adminOrderBy" th:action="@{/admin/orders/orderedby}">
                 <span>Rendezés</span>
                 <button type="submit" th:name="orderType" th:value="nameAsc">Név ˄</button>
@@ -21,10 +21,29 @@
                 <button type="submit" th:name="orderType" th:value="dateAsc">Dátum ˄</button>
                 <button type="submit" th:name="orderType" th:value="dateDesc">Dátum ˅</button>
             </form>
-            <!--  ˄  ˅  -->
-
+            <form class="adminOrderBy" th:action="@{/admin/orders/user/allorders}">
+                <span>Szűrés névre </span>
+                <select class="select" th:name="userName" >
+                    <option th:each="actualName: ${userNames}" th:value="${actualName}" th:text="${actualName}"></option>
+                </select>
+                <button type="submit">Szűrés</button>
+            </form>
+            <span class="errorMessage" th:if="${errormessage}" th:text="${errormessage}"></span>
+            <form class="adminOrderBy" th:action="@{/admin/orders/allordersbytime}">
+                <span>Szűrés dátum</span>
+                <input class="select" type="date" name="timePeriodFrom" />
+                <small>-tól  </small>
+                <input class="select" type="date" name="timePeriodTo" />
+                <small>-ig</small>
+                <button type="submit">Szűrés</button>
+            </form>
         </div>
-
+        <div>
+            <form th:action="@{/admin}" method="GET">
+                <button type="submit" class="button allBurgerButton">Admin főoldal</button>
+            </form>
+        </div>
+        <hr/>
         <table id="tableOfAllOrders" class="table nyitva">
             <thead>
             <tr>
@@ -32,6 +51,7 @@
                 <th>Név</th>
                 <th>Cím</th>
                 <th>Kiszállitás</th>
+                <th>Vip</th>
                 <th>Össz érték</th>
                 <th>Dátum</th>
                 <th>Tételek</th>
@@ -43,8 +63,9 @@
                 <td th:text="${cart.name}"></td>
                 <td th:text="${cart.address}"></td>
                 <td th:text="${cart.delivery} ? 'Igen' : 'Nem'"></td>
+                <td th:text="${cart.vipUser} ? 'Igen' : 'Nem'"></td>
                 <td th:text="${cart.sumOfAllItemPrices}"></td>
-                <td th:text="${#dates.format(cart.timeOfOrder, 'yyyy-MM-dd   HH:mm')}"></td>
+                <td th:text="${#temporals.format(cart.timeOfOrder, 'yyyy-MM-dd   HH:mm')}"></td>
                 <td class="orderOpenButton">
                     <form th:action="@{/admin/orders/cart}" method="GET">
                         <input type="hidden" name="cartIdForOpen" th:value="${cart.cartId}"/>

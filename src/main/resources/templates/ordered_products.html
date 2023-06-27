@@ -34,6 +34,11 @@
                         <td>1</td>
                         <td>500</td>
                     </tr>
+                    <tr th:if="${cart.vipUser}" >
+                        <td>Kedvezmény</td>
+                        <td colspan="2"></td>
+                        <td>- 10% Vip</td>
+                    </tr>
                     <tr id="sumPrice" >
                         <td>Végösszeg</td>
                         <td colspan="2"></td>
@@ -43,7 +48,7 @@
             </table>
             <hr/>
             <div class="delivery">
-                <p class="deliveryAddressItem">Dátum: <span th:text="${#dates.format(cart.timeOfOrder, 'yyyy-MM-dd   HH:mm')}"></span></p>
+                <p class="deliveryAddressItem">Dátum: <span th:text="${#temporals.format(cart.timeOfOrder, 'yyyy-MM-dd   HH:mm')}"></span></p>
                 <p class="deliveryAddressItem">Cím: <span th:text="${address.toString}"></span></p>
             </div>
             <hr/>

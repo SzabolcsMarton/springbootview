@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="leiras adminPanel">
+        <H1>Rendelés részletesen</H1>
+        <table  class="table nyitva">
+            <thead>
+            <tr>
+                <th>Termék</th>
+                <th>Mennyiség</th>
+                <th>Darab ár</th>
+                <th>Össz ár</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${cart.orderItems}" >
+                <td th:text="${item.hamburgerName}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="${item.price}"></td>
+                <td th:text="${item.sumOfPrice}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <form class="backToAllOrdersButtonForm" th:action="@{/users/user/orders}" method="GET">
+            <input type="hidden" name="userIdForOpen" th:value="${cart.user.userId}">
+            <button type="submit" class="button ">Vissza a rendelésekhez</button>
+        </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

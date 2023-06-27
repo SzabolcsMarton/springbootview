@@ -15,9 +15,9 @@
                   method="GET">
                 <button type="submit" class="button adminbutton">Hamburgerek</button>
             </form>
-            <form
+            <form th:action="@{/admin/users}"
                     method="GET">
-                <button type="submit" class="button adminbutton" disabled>Felhasználók</button>
+                <button type="submit" class="button adminbutton">Felhasználók</button>
             </form>
             <form th:action="@{/admin/orders}"
                     method="GET">
