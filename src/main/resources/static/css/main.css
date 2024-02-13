@@ -4,11 +4,11 @@
 
 body {
     font-family: sans-serif;
-/*    background-image: url("../img/belso.jpg");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    background-size: cover;*/
+    /*    background-image: url("../img/belso.jpg");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;*/
     background-color: #569a1b66;;
     margin: 0;
     padding: 0;
@@ -61,7 +61,7 @@ img {
 .navbar-links a {
     text-decoration: none;
     color: white;
-    padding: 0.4rem 1rem;
+    padding: 0.4rem 0.8rem;
     display: block;
     font-size: 1.5rem;
 }
@@ -156,7 +156,7 @@ img {
     }
 }
 
-.tableLeiras{
+.tableLeiras {
     color: white;
     border: 2px solid black;
     background-color: rgb(61 150 220);
@@ -242,8 +242,8 @@ hr {
     padding: 0 0.2rem;
 }
 
-.productPrice{
-    margin: 0.2rem auto;
+.productPrice {
+    margin: 0.4rem auto;
     font-size: 1.3rem;
 }
 
@@ -254,14 +254,14 @@ hr {
     font-size: 1.3rem;
 }
 
-.menuDescriptionLayout{
+.menuDescriptionLayout {
     display: flex;
     flex-direction: row;
     align-items: center;
 
 }
 
-.menuDescriptionFormButton{
+.menuDescriptionFormButton {
     margin: 0.3rem auto;
 
 }
@@ -285,7 +285,8 @@ hr {
     display: block;
     font-size: 1.1rem;
 }
-.menuDescriptionPrice{
+
+.menuDescriptionPrice {
     font-size: 1.3rem;
     margin: 0.5rem auto;
 }
@@ -305,7 +306,7 @@ hr {
 }
 
 .menuItem h2 {
-    margin: 0.2rem auto;
+    margin: 0.4rem auto;
 }
 
 .login {
@@ -322,10 +323,12 @@ hr {
     text-align: center;
 }
 
-select {
-    background-color: green;
+.select {
+    background-color: rgb(61 150 220);
     color: white;
-    font-size: 1.3rem;
+    font-size: 1rem;
+    border: 1px solid white;
+    padding: 0.1rem;
 }
 
 #burgerDarabSelect span {
@@ -415,9 +418,19 @@ select {
     }
 }
 
+.register h2,
+.register h3 {
+    margin: 0.3rem auto;
+}
+
 .register label,
 #log label {
     display: block;
+}
+
+.registerMessage {
+    margin: 0.2rem auto;
+    font-size: 1rem;
 }
 
 #log h2 {
@@ -464,7 +477,7 @@ select {
 }
 
 
-#allBurgerButton {
+.allBurgerButton {
     margin: 0.5rem auto;
     padding: 0.2rem 3rem;
 }
@@ -520,6 +533,11 @@ select {
     cursor: pointer;
 }
 
+.allOrdersButton {
+    font-size: 1.3rem;
+    padding: 0.6rem 3rem;
+}
+
 .adminbutton {
     width: 80%;
     padding: 0.6rem 1.5rem;
@@ -544,25 +562,19 @@ select {
 }
 
 .table td,
-.table th{
+.table th {
     padding: 0.5rem;
 }
 
-.table th{
+.table th {
     border-bottom: 2px solid white;
 }
 
-#tableOfAllOrders,
-#tableOfACart{
-    border-collapse: collapse;
-    padding: 0 1rem;
-}
-
-.orderOpenButton{
+.orderOpenButton {
     border: none;
 }
 
-.backToAllOrdersButtonForm{
+.backToAllOrdersButtonForm {
     margin: 1rem auto;
 }
 
@@ -614,6 +626,11 @@ select {
     margin: auto 0;
 }
 
+.adminRoleButton{
+    display: flex;
+    align-items: center;
+}
+
 .adminPanel {
     color: white;
 
@@ -628,6 +645,14 @@ select {
     margin-right: 1rem;
 }
 
+.adminOrderBy {
+    margin: 0.2rem;
+}
+
+.adminOrderBy button {
+    margin: 0.1rem;
+}
+
 .editpanel {
     display: flex;
     flex-direction: column;
@@ -635,11 +660,11 @@ select {
 }
 
 .editpanel h3,
-.editpanel h2{
+.editpanel h2 {
     margin: 0.2rem auto;
 }
 
-.burgerEditButtons{
+.burgerEditButtons {
     display: flex;
     justify-content: center;
 }
@@ -688,4 +713,57 @@ select {
 #cart-button {
     margin-bottom: 1rem;
     cursor: pointer;
+}
+
+/* profile */
+.profileHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profileHeader {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+
+
+.profileBlockTitle{
+    display: flex;
+    align-items: center;
+    margin-left: 10%;
+    margin-top: 0.2rem;
+
+}
+
+.profileBlockOrdersTitle{
+    display: flex;
+    align-items: center;
+    margin-top: 0.2rem;
+}
+
+.profileBlock{
+    margin-left: 10%;
+
+}
+
+.profileBlock span{
+    margin-top: 0.2rem;
+}
+
+.profileBlockFlex{
+    display: flex;
+    max-width: 80%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tableOfAllUser td{
+   text-align: start;
+}
+
+.tableOfAllUser{
+    display: flex;
+    align-items: flex-start;
 }

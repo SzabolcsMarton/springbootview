@@ -4,6 +4,7 @@ import com.springbootView.springbootview.model.Cart;
 import com.springbootView.springbootview.services.AdminService;
 import com.springbootView.springbootview.services.OrderService;
 import com.springbootView.springbootview.services.ToppingService;
+import com.springbootView.springbootview.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/admin", method = {RequestMethod.GET, RequestMethod.POST})
@@ -21,18 +27,23 @@ public class AdminController {
     private final AdminService adminService;
     private final ToppingService toppingService;
     private final OrderService orderService;
+    private final UserService userService;
 
     @Autowired
-    public AdminController(AdminService adminService, ToppingService toppingService, OrderService orderService) {
+    public AdminController(AdminService adminService, ToppingService toppingService, OrderService orderService, UserService userService) {
         this.adminService = adminService;
         this.toppingService = toppingService;
         this.orderService = orderService;
+        this.userService = userService;
     }
+    // main controller panel path
 
     @GetMapping()
     public String getAdminControllerView() {
         return "admin_controller";
     }
+
+    // hamburger controller paths
 
     @GetMapping(value = "/hamburger")
     public String getAdminHamburgerView(Model model) {
@@ -96,18 +107,93 @@ public class AdminController {
         model.addAttribute("toppings", toppingService.getAllToppings());
         return "admin_hamburger";
     }
+
+    // order controller paths
     @GetMapping(value = "/orders")
-    public String getAllOrders( Model model) {
-        model.addAttribute("carts", orderService.getAllOrders());
+    public String getAllOrders(Model model) {
+        model.addAttribute("userNames", userService.getAllUsersName());
+        model.addAttribute("carts", orderService.getAllOrdersOrderedBy("dateDesc"));
+        return "admin_orders";
+    }
+
+    @GetMapping(value = "/orders/orderedby", params = "orderType")
+    public String getAllOrdersOrderedBy(Model model, String orderType) {
+        model.addAttribute("userNames", userService.getAllUsersName());
+        model.addAttribute("carts", orderService.getAllOrdersOrderedBy(orderType));
+        return "admin_orders";
+    }
+
+    @GetMapping(value = "/orders/user/allorders", params = "userName")
+    public String getAllOrderFilteredByName(Model model, String userName) {
+        model.addAttribute("userNames", userService.getAllUsersName());
+        model.addAttribute("carts", orderService.getAllCartsByName(userName));
+        return "admin_orders";
+    }
+
+    @GetMapping(value = "/orders/allordersbytime", params = {"timePeriodFrom", "timePeriodTo"})
+    public String getAllOrderFilteredByTime(Model model, String timePeriodFrom, String timePeriodTo) throws ParseException {
+        List<Cart> carts = new ArrayList<>();
+        model.addAttribute("userNames", userService.getAllUsersName());
+        try {
+            carts = orderService.getAllCartByTime(timePeriodFrom, timePeriodTo);
+            model.addAttribute("carts", carts);
+        } catch (ParseException | DateTimeParseException e) {
+            model.addAttribute("errormessage", "A kezdő időpontot meg kell adni!");
+        }
         return "admin_orders";
     }
 
     @GetMapping(value = "/orders/cart", params = {"cartIdForOpen"})
     public String getOneCart(Long cartIdForOpen, Model model) {
         Cart cart = orderService.getCartById(cartIdForOpen);
-        model.addAttribute("cart",cart);
+        model.addAttribute("cart", cart);
         return "admin_orders_cart";
     }
+
+    //users controller path
+
+    @GetMapping(value = "/users")
+    public String getAllUsers(Model model) {
+        model.addAttribute("users", userService.getAllUsersOrderedByName());
+        return "admin_users";
+    }
+
+    @GetMapping(value = "/users/user", params = {"userIdForOpen"})
+    public String getOneUserById(Long userIdForOpen, Model model) {
+        model.addAttribute("user", userService.getOneUserById(userIdForOpen));
+        model.addAttribute("roles",userService.getUserRolesPrint(userIdForOpen));
+        return "admin_users_user";
+    }
+
+    @GetMapping(value = "/users/user/orders", params = {"userIdForOpen"})
+    public String getOneUsersAllOrdersById(Long userIdForOpen, Model model) {
+        model.addAttribute("carts", orderService.getAllCartsByUserIdOrderedByTimeDesc(userIdForOpen));
+        return "admin_users_user_orders";
+    }
+
+    @GetMapping(value = "/users/user/orders/cart", params = {"cartIdForOpen"})
+    public String getUsersOneOrder(Long cartIdForOpen, Model model) {
+        model.addAttribute("cart", orderService.getCartById(cartIdForOpen));
+        return "admin_users_user_orders_cart";
+    }
+    @GetMapping(value = "/users/user/adminrole/add", params = {"userId"})
+    public String addAdminRoleToCurrentUser(Long userId, Model model) {
+        model.addAttribute("user", userService.getOneUserById(userId));
+        model.addAttribute("message",userService.addAdminRole(userId));
+        model.addAttribute("roles",userService.getUserRolesPrint(userId));
+        return "admin_users_user";
+    }
+
+    @GetMapping(value = "/users/user/adminrole/remove", params = {"userId"})
+    public String removeAdminRoleToCurrentUser(Long userId, Model model) {
+        model.addAttribute("user", userService.getOneUserById(userId));
+        model.addAttribute("message",userService.removeAdminRole(userId));
+        model.addAttribute("roles",userService.getUserRolesPrint(userId));
+        return "admin_users_user";
+    }
+
+
+
 
 
 

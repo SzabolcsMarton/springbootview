@@ -3,7 +3,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymleaf.org">
+
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -38,14 +40,18 @@
                 <li sec:authorize="!isAuthenticated()">
                     <a href="http://localhost:8080/login">Belépés</a>
                 </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a href="http://localhost:8080/users/user">Profilom</a>
+                </li>
                 <li sec:authorize="hasRole('ADMIN')">
                     <a href="http://localhost:8080/admin">Admin</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
                     <div id="navBarUser">
                         <span id="welcomeText">Üdvözlünk</span>
-                        <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" >
-                            <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Kijelentkezés</a>
+                        <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="POST">
+                            <a href="javascript:{}"
+                               onclick="document.getElementById('frmlogout').submit(); return false;">Kijelentkezés</a>
                         </form>
                     </div>
                 </li>

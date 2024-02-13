@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Makiburger</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="leiras adminPanel">
+        <h2>Adatlapom </h2>
+        <hr/>
+        <p class="profileBlockTitle">törzs adatok</p>
+        <div class="profileBlock">
+            <table  class="table nyitva tableOfAllUser">
+                <tr>
+                    <td>Regisztrált:</td>
+                    <td th:text="${user.registered}"></td>
+                </tr>
+                <tr>
+                    <td>Vip tagság:</td>
+                    <td th:text="${user.vip} ? 'Igen' : 'Nem'"></td>
+                </tr>
+            </table>
+        </div>
+        <hr/>
+        <p class="profileBlockTitle">személyes adatok</p>
+        <div class="profileBlock">
+            <table  class="table nyitva tableOfAllUser">
+                <tr>
+                    <td>Felhasználó név:</td>
+                    <td th:text="${user.name}"></td>
+                </tr>
+                <tr>
+                    <td>Lakcím:</td>
+                    <td th:text="${user.address}"></td>
+                </tr>
+                <tr>
+                    <td>Email cím:</td>
+                    <td th:text="${user.email}"></td>
+                </tr>
+                <tr>
+                    <td>Telefon szám:</td>
+                    <td th:text="${user.address.phone}"></td>
+                </tr>
+            </table>
+        </div>
+        <hr/>
+        <div class="profileBlock profileBlockFlex">
+            <span  class="profileBlockOrdersTitle">rendeléseim</span>
+            <form th:action="@{/users/user/orders}" method="GET">
+                <input type="hidden" name="userIdForOpen" th:value="${user.userId}"/>
+                <button type="submit" class="button">Rendelések</button>
+            </form>
+        </div>
+        <hr/>
+    </div>
+</div>
+</body>
+</html>

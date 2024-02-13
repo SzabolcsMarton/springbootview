@@ -16,7 +16,7 @@
                     <span class="burgertoppings" th:each="currentTopping: ${burger.toppings}"
                           th:text="${currentTopping.name}"></span>
                 </div>
-                <span><span class="productPrice" th:text="${burger.price}"></span> -Ft.</span>
+                <span class="productPrice"><span  class="productPrice" th:text="${burger.price}"></span> -Ft.</span>
             </li>
         </ul>
     </main>

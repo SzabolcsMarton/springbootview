@@ -1,8 +1,8 @@
 package com.springbootView.springbootview.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -13,24 +13,33 @@ public class Cart {
     @GeneratedValue(generator = "seqGenCart")
     @Column(name = "cart_id")
     private Long cartId;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private String name;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "cart_orderitems", joinColumns = {@JoinColumn(name = "cart_id")}, inverseJoinColumns = {
             @JoinColumn(name = "order_item_id")})
     private List<OrderItem> orderItems = new ArrayList<>();
     private boolean delivery;
-    private int sumOfAllItemPrices;
+    private double sumOfAllItemPrices;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
+    private boolean vipUser = false;
     private String address;
-    private Date timeOfOrder = new Date();
+    private LocalDateTime timeOfOrder = LocalDateTime.now();
 
 
     public Cart() {
     }
 
-    public Cart(List<OrderItem> orderItems, boolean delivery, int sumOfAllItemPrices, String address) {
+    public Cart(List<OrderItem> orderItems, boolean delivery, String address, User user, boolean vipUser) {
         this.orderItems = orderItems;
         this.delivery = delivery;
         this.sumOfAllItemPrices = getTotalPrice(orderItems, delivery);
         this.address = address;
+        this.name = user.getName();
+        this.user = user;
+        this.vipUser = vipUser;
+
     }
 
     public List<OrderItem> getOrderItems() {
@@ -67,11 +76,11 @@ public class Cart {
         return sum;
     }
 
-    public int getSumOfAllItemPrices() {
+    public double getSumOfAllItemPrices() {
         return sumOfAllItemPrices;
     }
 
-    public void setSumOfAllItemPrices(int sumOfAllItemPrices) {
+    public void setSumOfAllItemPrices(double sumOfAllItemPrices) {
         this.sumOfAllItemPrices = sumOfAllItemPrices;
     }
 
@@ -91,26 +100,50 @@ public class Cart {
         this.cartId = cartId;
     }
 
-    public Date getTimeOfOrder() {
+    public LocalDateTime getTimeOfOrder() {
         return timeOfOrder;
     }
 
-    public void setTimeOfOrder(Date timeOfOrder) {
+    public void setTimeOfOrder(LocalDateTime timeOfOrder) {
         this.timeOfOrder = timeOfOrder;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        this.name = user.getName();
+    }
+
+    public boolean isVipUser() {
+        return vipUser;
+    }
+
+    public void setVipUser(boolean vipUser) {
+        this.vipUser = vipUser;
     }
 
     @Override
     public String toString() {
-        return "Order{" +
-                "id=" + cartId +
+        return "Cart{" +
+                "cartId=" + cartId +
+                ", name='" + name + '\'' +
                 ", orderItems=" + orderItems +
                 ", delivery=" + delivery +
                 ", sumOfAllItemPrices=" + sumOfAllItemPrices +
-                ", address=" + address +
+                ", user=" + user +
+                ", address='" + address + '\'' +
                 ", timeOfOrder=" + timeOfOrder +
                 '}';
     }
-
-
-
 }

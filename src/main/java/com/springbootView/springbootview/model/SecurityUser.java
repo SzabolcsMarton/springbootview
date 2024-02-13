@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class SecurityUser implements UserDetails {
 
-    private User user;
+    private final User user;
 
     public SecurityUser(User user) {
         this.user = user;
@@ -20,7 +20,7 @@ public class SecurityUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        Set<Role> roles =  user.getRoles();
+        List<Role> roles =  user.getRoles();
         for (Role actual: roles) {
             authorities.add(new SimpleGrantedAuthority(actual.getRole()));
         }

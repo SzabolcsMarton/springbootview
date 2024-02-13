@@ -64,8 +64,13 @@
         </form>
         <form th:action="@{/admin/hamburger/allburger}"
               method="GET">
-            <button type="submit" id="allBurgerButton" class="button">Összes Hamburger</button>
+            <button type="submit" class="button allBurgerButton">Összes Hamburger</button>
         </form>
+        <div>
+            <form th:action="@{/admin}" method="GET">
+                <button type="submit" class="button allBurgerButton">Admin főoldalra</button>
+            </form>
+        </div>
     </div>
 </div>
 </body>

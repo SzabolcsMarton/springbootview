@@ -28,8 +28,9 @@
             </tr>
             </tbody>
         </table>
-        <form class="backToAllOrdersButtonForm" th:action="@{/admin/orders}" method="GET">
-            <button type="submit" class="button allOrdersButton">Vissza a rendelésekhez</button>
+        <form class="backToAllOrdersButtonForm" th:action="@{/admin/users/user}" method="GET">
+            <input type="hidden" name="userIdForOpen" th:value="${cart.user.userId}">
+            <button type="submit" class="button ">Vissza az adatlapra</button>
         </form>
         </div>
 

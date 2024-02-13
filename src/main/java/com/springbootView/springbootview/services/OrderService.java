@@ -11,13 +11,17 @@ import org.springframework.stereotype.Service;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class OrderService {
 
     private static final int FIRST_ORDER_PARAM_PART_INDEX = 7;
+    private static final double RATE_TO_COUNT_VIP = 0.85;
 
     private final HamburgerRepository hamburgerRepository;
     private final AddressRepository addressRepository;
@@ -47,6 +51,65 @@ public class OrderService {
         return cartRepository.findAll();
     }
 
+    public List<Cart> getAllOrdersOrderedBy(String orderType){
+        return switch (orderType) {
+            case "nameAsc" -> cartRepository.findAllOrdersOrderedByNameAsc();
+            case "nameDesc" -> cartRepository.findAllOrdersOrderedByNameDesc();
+            case "priceAsc" -> cartRepository.findAllOrdersOrderedByPriceAsc();
+            case "priceDesc" -> cartRepository.findAllOrdersOrderedByPriceDesc();
+            case "dateAsc" -> cartRepository.findAllOrdersOrderedByDateAsc();
+            case "dateDesc" -> cartRepository.findAllOrdersOrderedByDateDesc();
+            default -> cartRepository.findAllOrdersOrderedByDateDesc();
+        };
+    }
+
+    public List<Cart> getAllCartsByName(String name){
+        return cartRepository.findCartsByName(name);
+    }
+
+    public List<Cart> getAllCartsByUserId(Long cartId){
+        return cartRepository.findAllOrdersOfUserById(cartId);
+    }
+
+    public List<Cart> getAllCartsByUserIdOrderedByTimeDesc(Long cartId){
+        return cartRepository.findAllOrdersOfUserByIdOrderedByTimeDesc(cartId);
+    }
+
+    public List<Cart> getAllCartByTime(String from, String until) throws ParseException {
+        List<Cart> allCarts = cartRepository.findAll();
+        List<Cart> result = new ArrayList<>();
+        LocalDate dateTimeFrom = LocalDate.parse(from);
+        LocalDateTime fromDate = parseFromDateFromString(from);
+        LocalDateTime untilDate;
+        if(!until.equals("")){
+            untilDate = parseUntilDateFromString(until);
+            result = cartRepository.findAllByTimeOfOrderBetween(fromDate,untilDate);
+        }
+        for (Cart actual : allCarts){
+            if (actual.getTimeOfOrder().toLocalDate().isEqual(dateTimeFrom)){
+                result.add(actual);
+            }
+        }
+        return result;
+    }
+
+/*    public List<Cart> getAllCartByTime(String from, String until) throws ParseException {
+        LocalDateTime fromDate = parseFromDateFromString(from);
+        LocalDateTime untilDate;
+        if(!until.equals("")){
+            untilDate = parseUntilDateFromString(until);
+            return cartRepository.findAllByTimeOfOrderBetween(fromDate,untilDate);
+        }
+
+        return cartRepository.findAllByTimeOfOrder(fromDate.toLocalDate());
+    }*/
+
+    public int countOrdersOfUserInGivenWeeksPrior(Long userId, long numberOfWeeksPrior){
+        LocalDateTime until = LocalDateTime.now();
+        LocalDateTime from = LocalDate.now().minusWeeks(numberOfWeeksPrior).atStartOfDay();
+        return cartRepository.countUsersAllOrdersInPeriod(userId,from,until);
+    }
+
     private Cart parseOrders(String ordersString) throws UnsupportedEncodingException {
         String encodedParams = URLDecoder.decode(ordersString, StandardCharsets.UTF_8.toString());
         String[] params = encodedParams.split("&");
@@ -56,14 +119,20 @@ public class OrderService {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.getOneUserByEmail(email);
         Cart newCart = new Cart();
-        String addressToSave = setAddress(deliveryParams,user,addressType);
-        newCart.setAddress(addressToSave);
+        newCart.setUser(user);
+        newCart.setAddress(this.getAddressString(deliveryParams,user,addressType));
         Cart savedCart = cartRepository.save(newCart);
         orderItemParser(savedCart, orderParams);
+        user.addOrder(savedCart);
+        if (user.isVip()){
+            savedCart.setSumOfAllItemPrices(savedCart.getSumOfAllItemPrices() * RATE_TO_COUNT_VIP);
+            savedCart.setVipUser(true);
+        }
+        userService.saveUser(user);
         return savedCart;
     }
 
-    private String setAddress(String[] deliveryParams, User user, String addressType) {
+    private String getAddressString(String[] deliveryParams, User user, String addressType) {
         if (addressType.equals("user")) {
             return user.getAddress().toString();
         } else {
@@ -104,6 +173,14 @@ public class OrderService {
         );
     }
 
+    private LocalDateTime parseFromDateFromString(String dateString) throws ParseException {
+        LocalDate localDate = LocalDate.parse(dateString);
+        return localDate.atStartOfDay();
+    }
 
+    private LocalDateTime parseUntilDateFromString(String dateString) throws ParseException {
+        LocalDate localDate = LocalDate.parse(dateString);
+        return localDate.atTime(23,59,59);
+    }
 
 }

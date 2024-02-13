@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -34,66 +36,112 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User getOneUserById(Long id){
-        return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found with id: " + id));
+    public User getOneUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
     }
 
-    public User getOneUserByEmail(String email){
-        return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException("User not found with email: " + email));
+    public User getOneUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
     }
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public void addRole(Long id, Role role){
+    public List<User> getAllUsersOrderedByName() {
+        return userRepository.findAllUserOrderedByName();
+    }
+
+    public List<String> getAllUsersName() {
+        List<User> users = userRepository.findAll();
+        List<String> names = new ArrayList<>();
+        for (User actual : users) {
+            if (!names.contains(actual.getName())) {
+                names.add(actual.getName());
+            }
+        }
+        return names.stream().sorted().toList();
+    }
+
+    public void addRole(Long id, Role role) {
         User user = getOneUserById(id);
         user.addRole(role);
+        userRepository.save(user);
     }
 
-    public void removeRole(Long id, Role role){
+    public void removeRole(Long id, Role role) {
         User user = getOneUserById(id);
         user.removeRole(role);
+        userRepository.save(user);
     }
 
-    public User saveUserFromDto(UserRegisterDto userRegisterDto){
+    public String getUserRolesPrint(Long userId){
+        List<Role> roles = this.getOneUserById(userId).getRoles();
+        StringBuilder stBuilder = new StringBuilder();
+        for (int i = 0; i < roles.size(); i++){
+            stBuilder.append(roles.get(i).getRole());
+            if(i != roles.size() - 1){
+                stBuilder.append(", ");
+            }
+        }
+        return stBuilder.toString();
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    public User saveUserFromDto(UserRegisterDto userRegisterDto) {
         checkPasswordsAreSame(userRegisterDto);
-       isUserExist(userRegisterDto.getEmail());
+        isUserExist(userRegisterDto.getEmail());
         User parsedUser = new User();
         parsedUser.setName(userRegisterDto.getName());
         parsedUser.setEmail(userRegisterDto.getEmail());
         parsedUser.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
-        parsedUser.setRegistered(new Date());
+        parsedUser.setRegistered(LocalDate.now());
         return userRepository.save(parsedUser);
     }
 
-    public boolean registerUser(AddressRegisterDto addressRegisterDto){
-        User userToRegister = getUser(addressRegisterDto.getUserId());
+    public boolean registerUser(AddressRegisterDto addressRegisterDto) {
+        User userToRegister = getOneUserById(addressRegisterDto.getUserId());
         Address addressToRegister = saveAddressFromDto(addressRegisterDto, userToRegister.getName());
         Role role = roleRepository.findByRole("ROLE_USER");
         userToRegister.addRole(role);
         userToRegister.setAddress(addressToRegister);
         User user = userRepository.save(userToRegister);
-        return user != null;
+        return true;
 
     }
 
-    private void isUserExist(String email){
+    public String addAdminRole(Long userId){
+        User user = this.getOneUserById(userId);
+        Role admin = roleRepository.findByRole("ROLE_ADMIN");
+        if(user.getRoles().contains(admin)){
+            return "Már rendelkezik admin joggal!";
+        }
+        this.addRole(userId, admin);
+        return "Admin jog sikeressen megadva!";
+    }
+
+    public String removeAdminRole(Long userId){
+        User user = this.getOneUserById(userId);
+        Role admin = roleRepository.findByRole("ROLE_ADMIN");
+        if(user.getRoles().contains(admin)){
+            this.removeRole(userId, admin);
+            return "Admin jog sikeressen megvonva!";
+        }
+        return "Nem rendelkezik admin joggal!";
+    }
+
+
+    private void isUserExist(String email) {
         Optional<User> checkEmployee = userRepository.findByEmail(email);
-        if(checkEmployee.isPresent()) {
-            throw new UserAlreadyRegisteredException("User email is already registered: "+ email);
+        if (checkEmployee.isPresent()) {
+            throw new UserAlreadyRegisteredException("User email is already registered: " + email);
         }
     }
 
-    private User getUser(Long userId){
-        Optional<User> user= userRepository.findById(userId);
-        if(user.isEmpty()){
-            throw new UserNotFoundException("Nem található a keresett user, id: " + userId);
-        }
-        return user.get();
-    }
-
-    private Address saveAddressFromDto(AddressRegisterDto addressRegisterDto, String name){
+    private Address saveAddressFromDto(AddressRegisterDto addressRegisterDto, String name) {
         Address parsedAddress = new Address();
         parsedAddress.setName(name);
         parsedAddress.setCity(addressRegisterDto.getCity());
@@ -104,10 +152,12 @@ public class UserService {
         return addressRepository.save(parsedAddress);
     }
 
-    private void checkPasswordsAreSame(UserRegisterDto userRegisterDto){
-        if(!userRegisterDto.getPassword().equals(userRegisterDto.getPassword2())){
+    private void checkPasswordsAreSame(UserRegisterDto userRegisterDto) {
+        if (!userRegisterDto.getPassword().equals(userRegisterDto.getPassword2())) {
             throw new IllegalArgumentException("A két jelszó nem egyezik!");
         }
     }
+
+
 
 }
