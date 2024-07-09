@@ -1,10 +1,8 @@
 package com.springbootView.springbootview.controller;
 
 import com.springbootView.springbootview.model.Cart;
-import com.springbootView.springbootview.services.AdminService;
-import com.springbootView.springbootview.services.OrderService;
-import com.springbootView.springbootview.services.ToppingService;
-import com.springbootView.springbootview.services.UserService;
+import com.springbootView.springbootview.services.*;
+import com.springbootView.springbootview.util.PdfGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
@@ -36,14 +35,14 @@ public class AdminController {
         this.orderService = orderService;
         this.userService = userService;
     }
-    // main controller panel path
+    // *** main controller panel path ***
 
     @GetMapping()
     public String getAdminControllerView() {
         return "admin_controller";
     }
 
-    // hamburger controller paths
+    // *** hamburger controller paths ***
 
     @GetMapping(value = "/hamburger")
     public String getAdminHamburgerView(Model model) {
@@ -108,7 +107,8 @@ public class AdminController {
         return "admin_hamburger";
     }
 
-    // order controller paths
+    // *** order controller paths ***
+
     @GetMapping(value = "/orders")
     public String getAllOrders(Model model) {
         model.addAttribute("userNames", userService.getAllUsersName());
@@ -150,7 +150,20 @@ public class AdminController {
         return "admin_orders_cart";
     }
 
-    //users controller path
+    // *** PDF path ***
+
+    @GetMapping(value = "/orders/pdf")
+    public String createPdfReport(Model model) throws URISyntaxException {
+        model.addAttribute("userNames", userService.getAllUsersName());
+        List<Cart> carts = orderService.getAllOrdersOrderedBy("dateDesc");
+        model.addAttribute("carts", carts);
+        PdfGenerator pdfGenerator = new PdfGenerator();
+        pdfGenerator.generatePdfReport(carts);
+        model.addAttribute("message", "PDF sikeresen generálva");
+        return  "admin_orders";
+    }
+
+    // *** users controller path ***
 
     @GetMapping(value = "/users")
     public String getAllUsers(Model model) {

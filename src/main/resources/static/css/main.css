@@ -470,6 +470,11 @@ hr {
     color: red;
 }
 
+.successMessage {
+    font-size: 1.2rem;
+    color: darkgreen;
+}
+
 #newHamburgerCreaterForm label,
 #newHamburgerToppings {
     display: block;
